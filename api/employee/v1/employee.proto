@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package employee.v1;
+
+import "google/api/annotations.proto";
+
+option go_package = "myapp/api/employee/v1;v1";
+
+message ListRequest {}
+
+message ListReply {}
+
+service Employee {
+    rpc List (ListRequest) returns (ListReply) {
+      option (google.api.http) = {
+        get: "/employees";
+      };
+    }
+  }

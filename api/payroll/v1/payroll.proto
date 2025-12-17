@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+package payroll.v1;
+
+import "google/api/annotations.proto";
+
+option go_package = "myapp/api/payroll/v1;v1";
+
+message CalculatePayrollRequest {
+  uint32 employee_id = 1;
+  int32 working_days = 2;
+  double overtime_hours = 3;
+  double allowances = 4;
+  string month_year = 5;  // Format: YYYY-MM
+}
+
+message CalculatePayrollReply {
+  double gross_salary = 1;
+  double net_salary = 2;
+  double deductions = 3;
+}
+
+service Payroll {
+  rpc CalculatePayroll (CalculatePayrollRequest) returns (CalculatePayrollReply) {
+    option (google.api.http) = {
+      post: "/v1/payroll/calculate"
+      body: "*"
+    };
+  }
+}
