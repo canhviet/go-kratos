@@ -25,6 +25,7 @@ type Bootstrap struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Server        *Server                `protobuf:"bytes,1,opt,name=server,proto3" json:"server,omitempty"`
 	Data          *Data                  `protobuf:"bytes,2,opt,name=data,proto3" json:"data,omitempty"`
+	Auth          *Auth                  `protobuf:"bytes,3,opt,name=auth,proto3" json:"auth,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -73,6 +74,13 @@ func (x *Bootstrap) GetData() *Data {
 	return nil
 }
 
+func (x *Bootstrap) GetAuth() *Auth {
+	if x != nil {
+		return x.Auth
+	}
+	return nil
+}
+
 type Server struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Http          *HTTP                  `protobuf:"bytes,1,opt,name=http,proto3" json:"http,omitempty"`
@@ -117,6 +125,50 @@ func (x *Server) GetHttp() *HTTP {
 	return nil
 }
 
+type Auth struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	JwtKey        string                 `protobuf:"bytes,1,opt,name=jwt_key,json=jwtKey,proto3" json:"jwt_key,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *Auth) Reset() {
+	*x = Auth{}
+	mi := &file_internal_conf_conf_proto_msgTypes[2]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Auth) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Auth) ProtoMessage() {}
+
+func (x *Auth) ProtoReflect() protoreflect.Message {
+	mi := &file_internal_conf_conf_proto_msgTypes[2]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Auth.ProtoReflect.Descriptor instead.
+func (*Auth) Descriptor() ([]byte, []int) {
+	return file_internal_conf_conf_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *Auth) GetJwtKey() string {
+	if x != nil {
+		return x.JwtKey
+	}
+	return ""
+}
+
 type HTTP struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Addr          string                 `protobuf:"bytes,1,opt,name=addr,proto3" json:"addr,omitempty"`
@@ -127,7 +179,7 @@ type HTTP struct {
 
 func (x *HTTP) Reset() {
 	*x = HTTP{}
-	mi := &file_internal_conf_conf_proto_msgTypes[2]
+	mi := &file_internal_conf_conf_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -139,7 +191,7 @@ func (x *HTTP) String() string {
 func (*HTTP) ProtoMessage() {}
 
 func (x *HTTP) ProtoReflect() protoreflect.Message {
-	mi := &file_internal_conf_conf_proto_msgTypes[2]
+	mi := &file_internal_conf_conf_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -152,7 +204,7 @@ func (x *HTTP) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use HTTP.ProtoReflect.Descriptor instead.
 func (*HTTP) Descriptor() ([]byte, []int) {
-	return file_internal_conf_conf_proto_rawDescGZIP(), []int{2}
+	return file_internal_conf_conf_proto_rawDescGZIP(), []int{3}
 }
 
 func (x *HTTP) GetAddr() string {
@@ -178,7 +230,7 @@ type Data struct {
 
 func (x *Data) Reset() {
 	*x = Data{}
-	mi := &file_internal_conf_conf_proto_msgTypes[3]
+	mi := &file_internal_conf_conf_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -190,7 +242,7 @@ func (x *Data) String() string {
 func (*Data) ProtoMessage() {}
 
 func (x *Data) ProtoReflect() protoreflect.Message {
-	mi := &file_internal_conf_conf_proto_msgTypes[3]
+	mi := &file_internal_conf_conf_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -203,7 +255,7 @@ func (x *Data) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Data.ProtoReflect.Descriptor instead.
 func (*Data) Descriptor() ([]byte, []int) {
-	return file_internal_conf_conf_proto_rawDescGZIP(), []int{3}
+	return file_internal_conf_conf_proto_rawDescGZIP(), []int{4}
 }
 
 func (x *Data) GetDatabase() *Data_Database {
@@ -223,7 +275,7 @@ type Data_Database struct {
 
 func (x *Data_Database) Reset() {
 	*x = Data_Database{}
-	mi := &file_internal_conf_conf_proto_msgTypes[4]
+	mi := &file_internal_conf_conf_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -235,7 +287,7 @@ func (x *Data_Database) String() string {
 func (*Data_Database) ProtoMessage() {}
 
 func (x *Data_Database) ProtoReflect() protoreflect.Message {
-	mi := &file_internal_conf_conf_proto_msgTypes[4]
+	mi := &file_internal_conf_conf_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -248,7 +300,7 @@ func (x *Data_Database) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Data_Database.ProtoReflect.Descriptor instead.
 func (*Data_Database) Descriptor() ([]byte, []int) {
-	return file_internal_conf_conf_proto_rawDescGZIP(), []int{3, 0}
+	return file_internal_conf_conf_proto_rawDescGZIP(), []int{4, 0}
 }
 
 func (x *Data_Database) GetDriver() string {
@@ -269,12 +321,15 @@ var File_internal_conf_conf_proto protoreflect.FileDescriptor
 
 const file_internal_conf_conf_proto_rawDesc = "" +
 	"\n" +
-	"\x18internal/conf/conf.proto\x12\vkratos.conf\"_\n" +
+	"\x18internal/conf/conf.proto\x12\vkratos.conf\"\x86\x01\n" +
 	"\tBootstrap\x12+\n" +
 	"\x06server\x18\x01 \x01(\v2\x13.kratos.conf.ServerR\x06server\x12%\n" +
-	"\x04data\x18\x02 \x01(\v2\x11.kratos.conf.DataR\x04data\"/\n" +
+	"\x04data\x18\x02 \x01(\v2\x11.kratos.conf.DataR\x04data\x12%\n" +
+	"\x04auth\x18\x03 \x01(\v2\x11.kratos.conf.AuthR\x04auth\"/\n" +
 	"\x06Server\x12%\n" +
-	"\x04http\x18\x01 \x01(\v2\x11.kratos.conf.HTTPR\x04http\"4\n" +
+	"\x04http\x18\x01 \x01(\v2\x11.kratos.conf.HTTPR\x04http\"\x1f\n" +
+	"\x04Auth\x12\x17\n" +
+	"\ajwt_key\x18\x01 \x01(\tR\x06jwtKey\"4\n" +
 	"\x04HTTP\x12\x12\n" +
 	"\x04addr\x18\x01 \x01(\tR\x04addr\x12\x18\n" +
 	"\atimeout\x18\x02 \x01(\x05R\atimeout\"z\n" +
@@ -296,24 +351,26 @@ func file_internal_conf_conf_proto_rawDescGZIP() []byte {
 	return file_internal_conf_conf_proto_rawDescData
 }
 
-var file_internal_conf_conf_proto_msgTypes = make([]protoimpl.MessageInfo, 5)
+var file_internal_conf_conf_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
 var file_internal_conf_conf_proto_goTypes = []any{
 	(*Bootstrap)(nil),     // 0: kratos.conf.Bootstrap
 	(*Server)(nil),        // 1: kratos.conf.Server
-	(*HTTP)(nil),          // 2: kratos.conf.HTTP
-	(*Data)(nil),          // 3: kratos.conf.Data
-	(*Data_Database)(nil), // 4: kratos.conf.Data.Database
+	(*Auth)(nil),          // 2: kratos.conf.Auth
+	(*HTTP)(nil),          // 3: kratos.conf.HTTP
+	(*Data)(nil),          // 4: kratos.conf.Data
+	(*Data_Database)(nil), // 5: kratos.conf.Data.Database
 }
 var file_internal_conf_conf_proto_depIdxs = []int32{
 	1, // 0: kratos.conf.Bootstrap.server:type_name -> kratos.conf.Server
-	3, // 1: kratos.conf.Bootstrap.data:type_name -> kratos.conf.Data
-	2, // 2: kratos.conf.Server.http:type_name -> kratos.conf.HTTP
-	4, // 3: kratos.conf.Data.database:type_name -> kratos.conf.Data.Database
-	4, // [4:4] is the sub-list for method output_type
-	4, // [4:4] is the sub-list for method input_type
-	4, // [4:4] is the sub-list for extension type_name
-	4, // [4:4] is the sub-list for extension extendee
-	0, // [0:4] is the sub-list for field type_name
+	4, // 1: kratos.conf.Bootstrap.data:type_name -> kratos.conf.Data
+	2, // 2: kratos.conf.Bootstrap.auth:type_name -> kratos.conf.Auth
+	3, // 3: kratos.conf.Server.http:type_name -> kratos.conf.HTTP
+	5, // 4: kratos.conf.Data.database:type_name -> kratos.conf.Data.Database
+	5, // [5:5] is the sub-list for method output_type
+	5, // [5:5] is the sub-list for method input_type
+	5, // [5:5] is the sub-list for extension type_name
+	5, // [5:5] is the sub-list for extension extendee
+	0, // [0:5] is the sub-list for field type_name
 }
 
 func init() { file_internal_conf_conf_proto_init() }
@@ -327,7 +384,7 @@ func file_internal_conf_conf_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_internal_conf_conf_proto_rawDesc), len(file_internal_conf_conf_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   5,
+			NumMessages:   6,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

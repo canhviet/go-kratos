@@ -57,17 +57,19 @@ func main() {
 
 	// business layer
 	UserUsecase := biz.NewUserUsecase(repo.NewUserRepo(d))
-
+	EmployeeUsecase := biz.NewEmployeeUsecase(repo.NewEmployeeRepo(d))
 	PayrollUsecase := biz.NewPayrollUsecase(repo.NewPayrollRepo(d))
+	TimesheetUsecase := biz.NewTimesheetUsecase(repo.NewTimesheetRepo(d))
 
 
 	// service layer
 	UserService := service.NewUserService(UserUsecase)
-
+	EmployeeService := service.NewEmployeeService(EmployeeUsecase)
 	PayrollService := service.NewPayrollService(PayrollUsecase)
+	TimeSheetService := service.NewTimesheetService(TimesheetUsecase)
 
 	// HTTP server
-	httpServer := server.NewHTTPServer(bc.Server, UserService, PayrollService)
+	httpServer := server.NewHTTPServer(bc.Server, UserService, PayrollService, EmployeeService, TimeSheetService)
 
 	// kratos app
 	app := kratos.New(

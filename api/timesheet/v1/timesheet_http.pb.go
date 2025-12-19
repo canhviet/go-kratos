@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-http v2.9.2
 // - protoc             v3.21.12
-// source: api/employee/v1/employee.proto
+// source: api/timesheet/v1/timesheet.proto
 
 package v1
 
@@ -19,13 +19,13 @@ var _ = binding.EncodeURL
 
 const _ = http.SupportPackageIsVersion1
 
-const OperationEmployeeCreate = "/employee.v1.Employee/Create"
-const OperationEmployeeDelete = "/employee.v1.Employee/Delete"
-const OperationEmployeeGet = "/employee.v1.Employee/Get"
-const OperationEmployeeList = "/employee.v1.Employee/List"
-const OperationEmployeeUpdate = "/employee.v1.Employee/Update"
+const OperationTimesheetCreate = "/timesheet.v1.Timesheet/Create"
+const OperationTimesheetDelete = "/timesheet.v1.Timesheet/Delete"
+const OperationTimesheetGet = "/timesheet.v1.Timesheet/Get"
+const OperationTimesheetList = "/timesheet.v1.Timesheet/List"
+const OperationTimesheetUpdate = "/timesheet.v1.Timesheet/Update"
 
-type EmployeeHTTPServer interface {
+type TimesheetHTTPServer interface {
 	Create(context.Context, *CreateRequest) (*CreateReply, error)
 	Delete(context.Context, *DeleteRequest) (*DeleteReply, error)
 	Get(context.Context, *GetRequest) (*GetReply, error)
@@ -33,22 +33,22 @@ type EmployeeHTTPServer interface {
 	Update(context.Context, *UpdateRequest) (*UpdateReply, error)
 }
 
-func RegisterEmployeeHTTPServer(s *http.Server, srv EmployeeHTTPServer) {
+func RegisterTimesheetHTTPServer(s *http.Server, srv TimesheetHTTPServer) {
 	r := s.Route("/")
-	r.GET("/employees", _Employee_List1_HTTP_Handler(srv))
-	r.GET("/employees/{id}", _Employee_Get1_HTTP_Handler(srv))
-	r.POST("/employees", _Employee_Create1_HTTP_Handler(srv))
-	r.PUT("/employees/{id}", _Employee_Update1_HTTP_Handler(srv))
-	r.DELETE("/employees/{id}", _Employee_Delete1_HTTP_Handler(srv))
+	r.GET("/timesheets", _Timesheet_List0_HTTP_Handler(srv))
+	r.GET("/timesheets/{id}", _Timesheet_Get0_HTTP_Handler(srv))
+	r.POST("/timesheets", _Timesheet_Create0_HTTP_Handler(srv))
+	r.PUT("/timesheets/{id}", _Timesheet_Update0_HTTP_Handler(srv))
+	r.DELETE("/timesheets/{id}", _Timesheet_Delete0_HTTP_Handler(srv))
 }
 
-func _Employee_List1_HTTP_Handler(srv EmployeeHTTPServer) func(ctx http.Context) error {
+func _Timesheet_List0_HTTP_Handler(srv TimesheetHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in ListRequest
 		if err := ctx.BindQuery(&in); err != nil {
 			return err
 		}
-		http.SetOperation(ctx, OperationEmployeeList)
+		http.SetOperation(ctx, OperationTimesheetList)
 		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
 			return srv.List(ctx, req.(*ListRequest))
 		})
@@ -61,7 +61,7 @@ func _Employee_List1_HTTP_Handler(srv EmployeeHTTPServer) func(ctx http.Context)
 	}
 }
 
-func _Employee_Get1_HTTP_Handler(srv EmployeeHTTPServer) func(ctx http.Context) error {
+func _Timesheet_Get0_HTTP_Handler(srv TimesheetHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in GetRequest
 		if err := ctx.BindQuery(&in); err != nil {
@@ -70,7 +70,7 @@ func _Employee_Get1_HTTP_Handler(srv EmployeeHTTPServer) func(ctx http.Context) 
 		if err := ctx.BindVars(&in); err != nil {
 			return err
 		}
-		http.SetOperation(ctx, OperationEmployeeGet)
+		http.SetOperation(ctx, OperationTimesheetGet)
 		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
 			return srv.Get(ctx, req.(*GetRequest))
 		})
@@ -83,7 +83,7 @@ func _Employee_Get1_HTTP_Handler(srv EmployeeHTTPServer) func(ctx http.Context) 
 	}
 }
 
-func _Employee_Create1_HTTP_Handler(srv EmployeeHTTPServer) func(ctx http.Context) error {
+func _Timesheet_Create0_HTTP_Handler(srv TimesheetHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in CreateRequest
 		if err := ctx.Bind(&in); err != nil {
@@ -92,7 +92,7 @@ func _Employee_Create1_HTTP_Handler(srv EmployeeHTTPServer) func(ctx http.Contex
 		if err := ctx.BindQuery(&in); err != nil {
 			return err
 		}
-		http.SetOperation(ctx, OperationEmployeeCreate)
+		http.SetOperation(ctx, OperationTimesheetCreate)
 		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
 			return srv.Create(ctx, req.(*CreateRequest))
 		})
@@ -105,7 +105,7 @@ func _Employee_Create1_HTTP_Handler(srv EmployeeHTTPServer) func(ctx http.Contex
 	}
 }
 
-func _Employee_Update1_HTTP_Handler(srv EmployeeHTTPServer) func(ctx http.Context) error {
+func _Timesheet_Update0_HTTP_Handler(srv TimesheetHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in UpdateRequest
 		if err := ctx.Bind(&in); err != nil {
@@ -117,7 +117,7 @@ func _Employee_Update1_HTTP_Handler(srv EmployeeHTTPServer) func(ctx http.Contex
 		if err := ctx.BindVars(&in); err != nil {
 			return err
 		}
-		http.SetOperation(ctx, OperationEmployeeUpdate)
+		http.SetOperation(ctx, OperationTimesheetUpdate)
 		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
 			return srv.Update(ctx, req.(*UpdateRequest))
 		})
@@ -130,7 +130,7 @@ func _Employee_Update1_HTTP_Handler(srv EmployeeHTTPServer) func(ctx http.Contex
 	}
 }
 
-func _Employee_Delete1_HTTP_Handler(srv EmployeeHTTPServer) func(ctx http.Context) error {
+func _Timesheet_Delete0_HTTP_Handler(srv TimesheetHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in DeleteRequest
 		if err := ctx.BindQuery(&in); err != nil {
@@ -139,7 +139,7 @@ func _Employee_Delete1_HTTP_Handler(srv EmployeeHTTPServer) func(ctx http.Contex
 		if err := ctx.BindVars(&in); err != nil {
 			return err
 		}
-		http.SetOperation(ctx, OperationEmployeeDelete)
+		http.SetOperation(ctx, OperationTimesheetDelete)
 		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
 			return srv.Delete(ctx, req.(*DeleteRequest))
 		})
@@ -152,7 +152,7 @@ func _Employee_Delete1_HTTP_Handler(srv EmployeeHTTPServer) func(ctx http.Contex
 	}
 }
 
-type EmployeeHTTPClient interface {
+type TimesheetHTTPClient interface {
 	Create(ctx context.Context, req *CreateRequest, opts ...http.CallOption) (rsp *CreateReply, err error)
 	Delete(ctx context.Context, req *DeleteRequest, opts ...http.CallOption) (rsp *DeleteReply, err error)
 	Get(ctx context.Context, req *GetRequest, opts ...http.CallOption) (rsp *GetReply, err error)
@@ -160,19 +160,19 @@ type EmployeeHTTPClient interface {
 	Update(ctx context.Context, req *UpdateRequest, opts ...http.CallOption) (rsp *UpdateReply, err error)
 }
 
-type EmployeeHTTPClientImpl struct {
+type TimesheetHTTPClientImpl struct {
 	cc *http.Client
 }
 
-func NewEmployeeHTTPClient(client *http.Client) EmployeeHTTPClient {
-	return &EmployeeHTTPClientImpl{client}
+func NewTimesheetHTTPClient(client *http.Client) TimesheetHTTPClient {
+	return &TimesheetHTTPClientImpl{client}
 }
 
-func (c *EmployeeHTTPClientImpl) Create(ctx context.Context, in *CreateRequest, opts ...http.CallOption) (*CreateReply, error) {
+func (c *TimesheetHTTPClientImpl) Create(ctx context.Context, in *CreateRequest, opts ...http.CallOption) (*CreateReply, error) {
 	var out CreateReply
-	pattern := "/employees"
+	pattern := "/timesheets"
 	path := binding.EncodeURL(pattern, in, false)
-	opts = append(opts, http.Operation(OperationEmployeeCreate))
+	opts = append(opts, http.Operation(OperationTimesheetCreate))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "POST", path, in, &out, opts...)
 	if err != nil {
@@ -181,11 +181,11 @@ func (c *EmployeeHTTPClientImpl) Create(ctx context.Context, in *CreateRequest, 
 	return &out, nil
 }
 
-func (c *EmployeeHTTPClientImpl) Delete(ctx context.Context, in *DeleteRequest, opts ...http.CallOption) (*DeleteReply, error) {
+func (c *TimesheetHTTPClientImpl) Delete(ctx context.Context, in *DeleteRequest, opts ...http.CallOption) (*DeleteReply, error) {
 	var out DeleteReply
-	pattern := "/employees/{id}"
+	pattern := "/timesheets/{id}"
 	path := binding.EncodeURL(pattern, in, true)
-	opts = append(opts, http.Operation(OperationEmployeeDelete))
+	opts = append(opts, http.Operation(OperationTimesheetDelete))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "DELETE", path, nil, &out, opts...)
 	if err != nil {
@@ -194,11 +194,11 @@ func (c *EmployeeHTTPClientImpl) Delete(ctx context.Context, in *DeleteRequest, 
 	return &out, nil
 }
 
-func (c *EmployeeHTTPClientImpl) Get(ctx context.Context, in *GetRequest, opts ...http.CallOption) (*GetReply, error) {
+func (c *TimesheetHTTPClientImpl) Get(ctx context.Context, in *GetRequest, opts ...http.CallOption) (*GetReply, error) {
 	var out GetReply
-	pattern := "/employees/{id}"
+	pattern := "/timesheets/{id}"
 	path := binding.EncodeURL(pattern, in, true)
-	opts = append(opts, http.Operation(OperationEmployeeGet))
+	opts = append(opts, http.Operation(OperationTimesheetGet))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "GET", path, nil, &out, opts...)
 	if err != nil {
@@ -207,11 +207,11 @@ func (c *EmployeeHTTPClientImpl) Get(ctx context.Context, in *GetRequest, opts .
 	return &out, nil
 }
 
-func (c *EmployeeHTTPClientImpl) List(ctx context.Context, in *ListRequest, opts ...http.CallOption) (*ListReply, error) {
+func (c *TimesheetHTTPClientImpl) List(ctx context.Context, in *ListRequest, opts ...http.CallOption) (*ListReply, error) {
 	var out ListReply
-	pattern := "/employees"
+	pattern := "/timesheets"
 	path := binding.EncodeURL(pattern, in, true)
-	opts = append(opts, http.Operation(OperationEmployeeList))
+	opts = append(opts, http.Operation(OperationTimesheetList))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "GET", path, nil, &out, opts...)
 	if err != nil {
@@ -220,11 +220,11 @@ func (c *EmployeeHTTPClientImpl) List(ctx context.Context, in *ListRequest, opts
 	return &out, nil
 }
 
-func (c *EmployeeHTTPClientImpl) Update(ctx context.Context, in *UpdateRequest, opts ...http.CallOption) (*UpdateReply, error) {
+func (c *TimesheetHTTPClientImpl) Update(ctx context.Context, in *UpdateRequest, opts ...http.CallOption) (*UpdateReply, error) {
 	var out UpdateReply
-	pattern := "/employees/{id}"
+	pattern := "/timesheets/{id}"
 	path := binding.EncodeURL(pattern, in, false)
-	opts = append(opts, http.Operation(OperationEmployeeUpdate))
+	opts = append(opts, http.Operation(OperationTimesheetUpdate))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "PUT", path, in, &out, opts...)
 	if err != nil {

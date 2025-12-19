@@ -29,11 +29,11 @@ type UserHTTPServer interface {
 
 func RegisterUserHTTPServer(s *http.Server, srv UserHTTPServer) {
 	r := s.Route("/")
-	r.GET("/users", _User_List1_HTTP_Handler(srv))
-	r.POST("/users", _User_Create0_HTTP_Handler(srv))
+	r.GET("/users", _User_List2_HTTP_Handler(srv))
+	r.POST("/users", _User_Create2_HTTP_Handler(srv))
 }
 
-func _User_List1_HTTP_Handler(srv UserHTTPServer) func(ctx http.Context) error {
+func _User_List2_HTTP_Handler(srv UserHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in ListRequest
 		if err := ctx.BindQuery(&in); err != nil {
@@ -52,7 +52,7 @@ func _User_List1_HTTP_Handler(srv UserHTTPServer) func(ctx http.Context) error {
 	}
 }
 
-func _User_Create0_HTTP_Handler(srv UserHTTPServer) func(ctx http.Context) error {
+func _User_Create2_HTTP_Handler(srv UserHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in CreateRequest
 		if err := ctx.Bind(&in); err != nil {

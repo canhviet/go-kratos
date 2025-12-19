@@ -2,7 +2,7 @@ package repository
 
 import (
 	"context"
-	"myapp/internal/biz"
+	"errors"
 	"myapp/internal/data"
 	"myapp/internal/data/model"
 
@@ -21,7 +21,7 @@ func (r *payrollRepo) GetEmployeeByID(ctx context.Context, id uint) (*model.Empl
 	var emp model.Employee
 	if err := r.data.DB.WithContext(ctx).First(&emp, id).Error; err != nil {
 		if err == gorm.ErrRecordNotFound {
-			return nil, biz.ErrEmployeeNotFound
+			return nil, errors.New("employee not found")
 		}
 		return nil, err
 	}
@@ -31,4 +31,3 @@ func (r *payrollRepo) GetEmployeeByID(ctx context.Context, id uint) (*model.Empl
 func (r *payrollRepo) SavePayroll(ctx context.Context, p *model.Payroll) error {
 	return r.data.DB.WithContext(ctx).Create(p).Error
 }
-

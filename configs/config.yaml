@@ -2,3 +2,6 @@ server:
   http:
     addr: 0.0.0.0:8000
     timeout: 1
+
+auth:
+  jwt_ket: ${JWT_SECRET:R0G444tYluKFUjDloU1H9hHZkHP9E5JBHla0kC89CmA=}

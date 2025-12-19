@@ -1,20 +1,19 @@
 syntax = "proto3";
 
-package employee.v1;
+package timesheet.v1;
 
 import "google/api/annotations.proto";
 import "google/protobuf/timestamp.proto";
 
-option go_package = "myapp/api/employee/v1;v1";
+option go_package = "myapp/api/timesheet/v1;v1";
 
-message EmployeeItem {
+message TimesheetItem {
   uint32 id = 1;
-  string name = 2;
-  string position = 3;
-  double base_salary = 4;
-  string bank_account = 5;
-  google.protobuf.Timestamp join_date = 6;
-  int32 dependents = 7;
+  uint32 employee_id = 2;
+  google.protobuf.Timestamp month_year = 3;
+  int32 working_days = 4;
+  double overtime_hours = 5;
+  int32 leave_days = 6;
 }
 
 message ListRequest {
@@ -23,7 +22,7 @@ message ListRequest {
 }
 
 message ListReply {
-  repeated EmployeeItem items = 1;
+  repeated TimesheetItem items = 1;
   string next_page_token = 2;
 }
 
@@ -32,34 +31,32 @@ message GetRequest {
 }
 
 message GetReply {
-  EmployeeItem item = 1;
+  TimesheetItem item = 1;
 }
 
 message CreateRequest {
-  string name = 1;
-  string position = 2;
-  double base_salary = 3;
-  string bank_account = 4;
-  google.protobuf.Timestamp join_date = 5;
-  int32 dependents = 6;
+  uint32 employee_id = 1;
+  google.protobuf.Timestamp month_year = 2;
+  int32 working_days = 3;
+  double overtime_hours = 4;
+  int32 leave_days = 5;
 }
 
 message CreateReply {
-  EmployeeItem item = 1;
+  TimesheetItem item = 1;
 }
 
 message UpdateRequest {
   uint32 id = 1;
-  string name = 2;
-  string position = 3;
-  double base_salary = 4;
-  string bank_account = 5;
-  google.protobuf.Timestamp join_date = 6;
-  int32 dependents = 7;
+  uint32 employee_id = 2;
+  google.protobuf.Timestamp month_year = 3;
+  int32 working_days = 4;
+  double overtime_hours = 5;
+  int32 leave_days = 6;
 }
 
 message UpdateReply {
-  EmployeeItem item = 1;
+  TimesheetItem item = 1;
 }
 
 message DeleteRequest {
@@ -68,36 +65,36 @@ message DeleteRequest {
 
 message DeleteReply {}
 
-service Employee {
+service Timesheet {
   rpc List (ListRequest) returns (ListReply) {
     option (google.api.http) = {
-      get: "/employees";
+      get: "/timesheets";
     };
   }
 
   rpc Get (GetRequest) returns (GetReply) {
     option (google.api.http) = {
-      get: "/employees/{id}";
+      get: "/timesheets/{id}";
     };
   }
 
   rpc Create (CreateRequest) returns (CreateReply) {
     option (google.api.http) = {
-      post: "/employees";
+      post: "/timesheets";
       body: "*";
     };
   }
 
   rpc Update (UpdateRequest) returns (UpdateReply) {
     option (google.api.http) = {
-      put: "/employees/{id}";
+      put: "/timesheets/{id}";
       body: "*";
     };
   }
 
   rpc Delete (DeleteRequest) returns (DeleteReply) {
     option (google.api.http) = {
-      delete: "/employees/{id}";
+      delete: "/timesheets/{id}";
     };
   }
 }

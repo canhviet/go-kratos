@@ -10,6 +10,7 @@ import (
 	_ "google.golang.org/genproto/googleapis/api/annotations"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
+	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
@@ -22,15 +23,109 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+type EmployeeItem struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            uint32                 `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	Position      string                 `protobuf:"bytes,3,opt,name=position,proto3" json:"position,omitempty"`
+	BaseSalary    float64                `protobuf:"fixed64,4,opt,name=base_salary,json=baseSalary,proto3" json:"base_salary,omitempty"`
+	BankAccount   string                 `protobuf:"bytes,5,opt,name=bank_account,json=bankAccount,proto3" json:"bank_account,omitempty"`
+	JoinDate      *timestamppb.Timestamp `protobuf:"bytes,6,opt,name=join_date,json=joinDate,proto3" json:"join_date,omitempty"`
+	Dependents    int32                  `protobuf:"varint,7,opt,name=dependents,proto3" json:"dependents,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *EmployeeItem) Reset() {
+	*x = EmployeeItem{}
+	mi := &file_api_employee_v1_employee_proto_msgTypes[0]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *EmployeeItem) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*EmployeeItem) ProtoMessage() {}
+
+func (x *EmployeeItem) ProtoReflect() protoreflect.Message {
+	mi := &file_api_employee_v1_employee_proto_msgTypes[0]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use EmployeeItem.ProtoReflect.Descriptor instead.
+func (*EmployeeItem) Descriptor() ([]byte, []int) {
+	return file_api_employee_v1_employee_proto_rawDescGZIP(), []int{0}
+}
+
+func (x *EmployeeItem) GetId() uint32 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+func (x *EmployeeItem) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *EmployeeItem) GetPosition() string {
+	if x != nil {
+		return x.Position
+	}
+	return ""
+}
+
+func (x *EmployeeItem) GetBaseSalary() float64 {
+	if x != nil {
+		return x.BaseSalary
+	}
+	return 0
+}
+
+func (x *EmployeeItem) GetBankAccount() string {
+	if x != nil {
+		return x.BankAccount
+	}
+	return ""
+}
+
+func (x *EmployeeItem) GetJoinDate() *timestamppb.Timestamp {
+	if x != nil {
+		return x.JoinDate
+	}
+	return nil
+}
+
+func (x *EmployeeItem) GetDependents() int32 {
+	if x != nil {
+		return x.Dependents
+	}
+	return 0
+}
+
 type ListRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
+	PageSize      int32                  `protobuf:"varint,1,opt,name=page_size,json=pageSize,proto3" json:"page_size,omitempty"`
+	PageToken     string                 `protobuf:"bytes,2,opt,name=page_token,json=pageToken,proto3" json:"page_token,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *ListRequest) Reset() {
 	*x = ListRequest{}
-	mi := &file_api_employee_v1_employee_proto_msgTypes[0]
+	mi := &file_api_employee_v1_employee_proto_msgTypes[1]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -42,7 +137,7 @@ func (x *ListRequest) String() string {
 func (*ListRequest) ProtoMessage() {}
 
 func (x *ListRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_api_employee_v1_employee_proto_msgTypes[0]
+	mi := &file_api_employee_v1_employee_proto_msgTypes[1]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -55,18 +150,34 @@ func (x *ListRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListRequest.ProtoReflect.Descriptor instead.
 func (*ListRequest) Descriptor() ([]byte, []int) {
-	return file_api_employee_v1_employee_proto_rawDescGZIP(), []int{0}
+	return file_api_employee_v1_employee_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *ListRequest) GetPageSize() int32 {
+	if x != nil {
+		return x.PageSize
+	}
+	return 0
+}
+
+func (x *ListRequest) GetPageToken() string {
+	if x != nil {
+		return x.PageToken
+	}
+	return ""
 }
 
 type ListReply struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
+	Items         []*EmployeeItem        `protobuf:"bytes,1,rep,name=items,proto3" json:"items,omitempty"`
+	NextPageToken string                 `protobuf:"bytes,2,opt,name=next_page_token,json=nextPageToken,proto3" json:"next_page_token,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *ListReply) Reset() {
 	*x = ListReply{}
-	mi := &file_api_employee_v1_employee_proto_msgTypes[1]
+	mi := &file_api_employee_v1_employee_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -78,7 +189,7 @@ func (x *ListReply) String() string {
 func (*ListReply) ProtoMessage() {}
 
 func (x *ListReply) ProtoReflect() protoreflect.Message {
-	mi := &file_api_employee_v1_employee_proto_msgTypes[1]
+	mi := &file_api_employee_v1_employee_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -91,19 +202,519 @@ func (x *ListReply) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListReply.ProtoReflect.Descriptor instead.
 func (*ListReply) Descriptor() ([]byte, []int) {
-	return file_api_employee_v1_employee_proto_rawDescGZIP(), []int{1}
+	return file_api_employee_v1_employee_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *ListReply) GetItems() []*EmployeeItem {
+	if x != nil {
+		return x.Items
+	}
+	return nil
+}
+
+func (x *ListReply) GetNextPageToken() string {
+	if x != nil {
+		return x.NextPageToken
+	}
+	return ""
+}
+
+type GetRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            uint32                 `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetRequest) Reset() {
+	*x = GetRequest{}
+	mi := &file_api_employee_v1_employee_proto_msgTypes[3]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetRequest) ProtoMessage() {}
+
+func (x *GetRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_api_employee_v1_employee_proto_msgTypes[3]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetRequest.ProtoReflect.Descriptor instead.
+func (*GetRequest) Descriptor() ([]byte, []int) {
+	return file_api_employee_v1_employee_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *GetRequest) GetId() uint32 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+type GetReply struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Item          *EmployeeItem          `protobuf:"bytes,1,opt,name=item,proto3" json:"item,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetReply) Reset() {
+	*x = GetReply{}
+	mi := &file_api_employee_v1_employee_proto_msgTypes[4]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetReply) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetReply) ProtoMessage() {}
+
+func (x *GetReply) ProtoReflect() protoreflect.Message {
+	mi := &file_api_employee_v1_employee_proto_msgTypes[4]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetReply.ProtoReflect.Descriptor instead.
+func (*GetReply) Descriptor() ([]byte, []int) {
+	return file_api_employee_v1_employee_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *GetReply) GetItem() *EmployeeItem {
+	if x != nil {
+		return x.Item
+	}
+	return nil
+}
+
+type CreateRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Name          string                 `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	Position      string                 `protobuf:"bytes,2,opt,name=position,proto3" json:"position,omitempty"`
+	BaseSalary    float64                `protobuf:"fixed64,3,opt,name=base_salary,json=baseSalary,proto3" json:"base_salary,omitempty"`
+	BankAccount   string                 `protobuf:"bytes,4,opt,name=bank_account,json=bankAccount,proto3" json:"bank_account,omitempty"`
+	JoinDate      *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=join_date,json=joinDate,proto3" json:"join_date,omitempty"`
+	Dependents    int32                  `protobuf:"varint,6,opt,name=dependents,proto3" json:"dependents,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CreateRequest) Reset() {
+	*x = CreateRequest{}
+	mi := &file_api_employee_v1_employee_proto_msgTypes[5]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CreateRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateRequest) ProtoMessage() {}
+
+func (x *CreateRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_api_employee_v1_employee_proto_msgTypes[5]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateRequest.ProtoReflect.Descriptor instead.
+func (*CreateRequest) Descriptor() ([]byte, []int) {
+	return file_api_employee_v1_employee_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *CreateRequest) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *CreateRequest) GetPosition() string {
+	if x != nil {
+		return x.Position
+	}
+	return ""
+}
+
+func (x *CreateRequest) GetBaseSalary() float64 {
+	if x != nil {
+		return x.BaseSalary
+	}
+	return 0
+}
+
+func (x *CreateRequest) GetBankAccount() string {
+	if x != nil {
+		return x.BankAccount
+	}
+	return ""
+}
+
+func (x *CreateRequest) GetJoinDate() *timestamppb.Timestamp {
+	if x != nil {
+		return x.JoinDate
+	}
+	return nil
+}
+
+func (x *CreateRequest) GetDependents() int32 {
+	if x != nil {
+		return x.Dependents
+	}
+	return 0
+}
+
+type CreateReply struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Item          *EmployeeItem          `protobuf:"bytes,1,opt,name=item,proto3" json:"item,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CreateReply) Reset() {
+	*x = CreateReply{}
+	mi := &file_api_employee_v1_employee_proto_msgTypes[6]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CreateReply) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateReply) ProtoMessage() {}
+
+func (x *CreateReply) ProtoReflect() protoreflect.Message {
+	mi := &file_api_employee_v1_employee_proto_msgTypes[6]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateReply.ProtoReflect.Descriptor instead.
+func (*CreateReply) Descriptor() ([]byte, []int) {
+	return file_api_employee_v1_employee_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *CreateReply) GetItem() *EmployeeItem {
+	if x != nil {
+		return x.Item
+	}
+	return nil
+}
+
+type UpdateRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            uint32                 `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	Position      string                 `protobuf:"bytes,3,opt,name=position,proto3" json:"position,omitempty"`
+	BaseSalary    float64                `protobuf:"fixed64,4,opt,name=base_salary,json=baseSalary,proto3" json:"base_salary,omitempty"`
+	BankAccount   string                 `protobuf:"bytes,5,opt,name=bank_account,json=bankAccount,proto3" json:"bank_account,omitempty"`
+	JoinDate      *timestamppb.Timestamp `protobuf:"bytes,6,opt,name=join_date,json=joinDate,proto3" json:"join_date,omitempty"`
+	Dependents    int32                  `protobuf:"varint,7,opt,name=dependents,proto3" json:"dependents,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *UpdateRequest) Reset() {
+	*x = UpdateRequest{}
+	mi := &file_api_employee_v1_employee_proto_msgTypes[7]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UpdateRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateRequest) ProtoMessage() {}
+
+func (x *UpdateRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_api_employee_v1_employee_proto_msgTypes[7]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateRequest.ProtoReflect.Descriptor instead.
+func (*UpdateRequest) Descriptor() ([]byte, []int) {
+	return file_api_employee_v1_employee_proto_rawDescGZIP(), []int{7}
+}
+
+func (x *UpdateRequest) GetId() uint32 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+func (x *UpdateRequest) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *UpdateRequest) GetPosition() string {
+	if x != nil {
+		return x.Position
+	}
+	return ""
+}
+
+func (x *UpdateRequest) GetBaseSalary() float64 {
+	if x != nil {
+		return x.BaseSalary
+	}
+	return 0
+}
+
+func (x *UpdateRequest) GetBankAccount() string {
+	if x != nil {
+		return x.BankAccount
+	}
+	return ""
+}
+
+func (x *UpdateRequest) GetJoinDate() *timestamppb.Timestamp {
+	if x != nil {
+		return x.JoinDate
+	}
+	return nil
+}
+
+func (x *UpdateRequest) GetDependents() int32 {
+	if x != nil {
+		return x.Dependents
+	}
+	return 0
+}
+
+type UpdateReply struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Item          *EmployeeItem          `protobuf:"bytes,1,opt,name=item,proto3" json:"item,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *UpdateReply) Reset() {
+	*x = UpdateReply{}
+	mi := &file_api_employee_v1_employee_proto_msgTypes[8]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UpdateReply) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateReply) ProtoMessage() {}
+
+func (x *UpdateReply) ProtoReflect() protoreflect.Message {
+	mi := &file_api_employee_v1_employee_proto_msgTypes[8]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateReply.ProtoReflect.Descriptor instead.
+func (*UpdateReply) Descriptor() ([]byte, []int) {
+	return file_api_employee_v1_employee_proto_rawDescGZIP(), []int{8}
+}
+
+func (x *UpdateReply) GetItem() *EmployeeItem {
+	if x != nil {
+		return x.Item
+	}
+	return nil
+}
+
+type DeleteRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            uint32                 `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DeleteRequest) Reset() {
+	*x = DeleteRequest{}
+	mi := &file_api_employee_v1_employee_proto_msgTypes[9]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DeleteRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteRequest) ProtoMessage() {}
+
+func (x *DeleteRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_api_employee_v1_employee_proto_msgTypes[9]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteRequest.ProtoReflect.Descriptor instead.
+func (*DeleteRequest) Descriptor() ([]byte, []int) {
+	return file_api_employee_v1_employee_proto_rawDescGZIP(), []int{9}
+}
+
+func (x *DeleteRequest) GetId() uint32 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+type DeleteReply struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DeleteReply) Reset() {
+	*x = DeleteReply{}
+	mi := &file_api_employee_v1_employee_proto_msgTypes[10]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DeleteReply) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteReply) ProtoMessage() {}
+
+func (x *DeleteReply) ProtoReflect() protoreflect.Message {
+	mi := &file_api_employee_v1_employee_proto_msgTypes[10]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteReply.ProtoReflect.Descriptor instead.
+func (*DeleteReply) Descriptor() ([]byte, []int) {
+	return file_api_employee_v1_employee_proto_rawDescGZIP(), []int{10}
 }
 
 var File_api_employee_v1_employee_proto protoreflect.FileDescriptor
 
 const file_api_employee_v1_employee_proto_rawDesc = "" +
 	"\n" +
-	"\x1eapi/employee/v1/employee.proto\x12\vemployee.v1\x1a\x1cgoogle/api/annotations.proto\"\r\n" +
-	"\vListRequest\"\v\n" +
-	"\tListReply2X\n" +
+	"\x1eapi/employee/v1/employee.proto\x12\vemployee.v1\x1a\x1cgoogle/api/annotations.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"\xeb\x01\n" +
+	"\fEmployeeItem\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\rR\x02id\x12\x12\n" +
+	"\x04name\x18\x02 \x01(\tR\x04name\x12\x1a\n" +
+	"\bposition\x18\x03 \x01(\tR\bposition\x12\x1f\n" +
+	"\vbase_salary\x18\x04 \x01(\x01R\n" +
+	"baseSalary\x12!\n" +
+	"\fbank_account\x18\x05 \x01(\tR\vbankAccount\x127\n" +
+	"\tjoin_date\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampR\bjoinDate\x12\x1e\n" +
+	"\n" +
+	"dependents\x18\a \x01(\x05R\n" +
+	"dependents\"I\n" +
+	"\vListRequest\x12\x1b\n" +
+	"\tpage_size\x18\x01 \x01(\x05R\bpageSize\x12\x1d\n" +
+	"\n" +
+	"page_token\x18\x02 \x01(\tR\tpageToken\"d\n" +
+	"\tListReply\x12/\n" +
+	"\x05items\x18\x01 \x03(\v2\x19.employee.v1.EmployeeItemR\x05items\x12&\n" +
+	"\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken\"\x1c\n" +
+	"\n" +
+	"GetRequest\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\rR\x02id\"9\n" +
+	"\bGetReply\x12-\n" +
+	"\x04item\x18\x01 \x01(\v2\x19.employee.v1.EmployeeItemR\x04item\"\xdc\x01\n" +
+	"\rCreateRequest\x12\x12\n" +
+	"\x04name\x18\x01 \x01(\tR\x04name\x12\x1a\n" +
+	"\bposition\x18\x02 \x01(\tR\bposition\x12\x1f\n" +
+	"\vbase_salary\x18\x03 \x01(\x01R\n" +
+	"baseSalary\x12!\n" +
+	"\fbank_account\x18\x04 \x01(\tR\vbankAccount\x127\n" +
+	"\tjoin_date\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\bjoinDate\x12\x1e\n" +
+	"\n" +
+	"dependents\x18\x06 \x01(\x05R\n" +
+	"dependents\"<\n" +
+	"\vCreateReply\x12-\n" +
+	"\x04item\x18\x01 \x01(\v2\x19.employee.v1.EmployeeItemR\x04item\"\xec\x01\n" +
+	"\rUpdateRequest\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\rR\x02id\x12\x12\n" +
+	"\x04name\x18\x02 \x01(\tR\x04name\x12\x1a\n" +
+	"\bposition\x18\x03 \x01(\tR\bposition\x12\x1f\n" +
+	"\vbase_salary\x18\x04 \x01(\x01R\n" +
+	"baseSalary\x12!\n" +
+	"\fbank_account\x18\x05 \x01(\tR\vbankAccount\x127\n" +
+	"\tjoin_date\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampR\bjoinDate\x12\x1e\n" +
+	"\n" +
+	"dependents\x18\a \x01(\x05R\n" +
+	"dependents\"<\n" +
+	"\vUpdateReply\x12-\n" +
+	"\x04item\x18\x01 \x01(\v2\x19.employee.v1.EmployeeItemR\x04item\"\x1f\n" +
+	"\rDeleteRequest\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\rR\x02id\"\r\n" +
+	"\vDeleteReply2\xb4\x03\n" +
 	"\bEmployee\x12L\n" +
 	"\x04List\x12\x18.employee.v1.ListRequest\x1a\x16.employee.v1.ListReply\"\x12\x82\xd3\xe4\x93\x02\f\x12\n" +
-	"/employeesB\x1aZ\x18myapp/api/employee/v1;v1b\x06proto3"
+	"/employees\x12N\n" +
+	"\x03Get\x12\x17.employee.v1.GetRequest\x1a\x15.employee.v1.GetReply\"\x17\x82\xd3\xe4\x93\x02\x11\x12\x0f/employees/{id}\x12U\n" +
+	"\x06Create\x12\x1a.employee.v1.CreateRequest\x1a\x18.employee.v1.CreateReply\"\x15\x82\xd3\xe4\x93\x02\x0f:\x01*\"\n" +
+	"/employees\x12Z\n" +
+	"\x06Update\x12\x1a.employee.v1.UpdateRequest\x1a\x18.employee.v1.UpdateReply\"\x1a\x82\xd3\xe4\x93\x02\x14:\x01*\x1a\x0f/employees/{id}\x12W\n" +
+	"\x06Delete\x12\x1a.employee.v1.DeleteRequest\x1a\x18.employee.v1.DeleteReply\"\x17\x82\xd3\xe4\x93\x02\x11*\x0f/employees/{id}B\x1aZ\x18myapp/api/employee/v1;v1b\x06proto3"
 
 var (
 	file_api_employee_v1_employee_proto_rawDescOnce sync.Once
@@ -117,19 +728,44 @@ func file_api_employee_v1_employee_proto_rawDescGZIP() []byte {
 	return file_api_employee_v1_employee_proto_rawDescData
 }
 
-var file_api_employee_v1_employee_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
+var file_api_employee_v1_employee_proto_msgTypes = make([]protoimpl.MessageInfo, 11)
 var file_api_employee_v1_employee_proto_goTypes = []any{
-	(*ListRequest)(nil), // 0: employee.v1.ListRequest
-	(*ListReply)(nil),   // 1: employee.v1.ListReply
+	(*EmployeeItem)(nil),          // 0: employee.v1.EmployeeItem
+	(*ListRequest)(nil),           // 1: employee.v1.ListRequest
+	(*ListReply)(nil),             // 2: employee.v1.ListReply
+	(*GetRequest)(nil),            // 3: employee.v1.GetRequest
+	(*GetReply)(nil),              // 4: employee.v1.GetReply
+	(*CreateRequest)(nil),         // 5: employee.v1.CreateRequest
+	(*CreateReply)(nil),           // 6: employee.v1.CreateReply
+	(*UpdateRequest)(nil),         // 7: employee.v1.UpdateRequest
+	(*UpdateReply)(nil),           // 8: employee.v1.UpdateReply
+	(*DeleteRequest)(nil),         // 9: employee.v1.DeleteRequest
+	(*DeleteReply)(nil),           // 10: employee.v1.DeleteReply
+	(*timestamppb.Timestamp)(nil), // 11: google.protobuf.Timestamp
 }
 var file_api_employee_v1_employee_proto_depIdxs = []int32{
-	0, // 0: employee.v1.Employee.List:input_type -> employee.v1.ListRequest
-	1, // 1: employee.v1.Employee.List:output_type -> employee.v1.ListReply
-	1, // [1:2] is the sub-list for method output_type
-	0, // [0:1] is the sub-list for method input_type
-	0, // [0:0] is the sub-list for extension type_name
-	0, // [0:0] is the sub-list for extension extendee
-	0, // [0:0] is the sub-list for field type_name
+	11, // 0: employee.v1.EmployeeItem.join_date:type_name -> google.protobuf.Timestamp
+	0,  // 1: employee.v1.ListReply.items:type_name -> employee.v1.EmployeeItem
+	0,  // 2: employee.v1.GetReply.item:type_name -> employee.v1.EmployeeItem
+	11, // 3: employee.v1.CreateRequest.join_date:type_name -> google.protobuf.Timestamp
+	0,  // 4: employee.v1.CreateReply.item:type_name -> employee.v1.EmployeeItem
+	11, // 5: employee.v1.UpdateRequest.join_date:type_name -> google.protobuf.Timestamp
+	0,  // 6: employee.v1.UpdateReply.item:type_name -> employee.v1.EmployeeItem
+	1,  // 7: employee.v1.Employee.List:input_type -> employee.v1.ListRequest
+	3,  // 8: employee.v1.Employee.Get:input_type -> employee.v1.GetRequest
+	5,  // 9: employee.v1.Employee.Create:input_type -> employee.v1.CreateRequest
+	7,  // 10: employee.v1.Employee.Update:input_type -> employee.v1.UpdateRequest
+	9,  // 11: employee.v1.Employee.Delete:input_type -> employee.v1.DeleteRequest
+	2,  // 12: employee.v1.Employee.List:output_type -> employee.v1.ListReply
+	4,  // 13: employee.v1.Employee.Get:output_type -> employee.v1.GetReply
+	6,  // 14: employee.v1.Employee.Create:output_type -> employee.v1.CreateReply
+	8,  // 15: employee.v1.Employee.Update:output_type -> employee.v1.UpdateReply
+	10, // 16: employee.v1.Employee.Delete:output_type -> employee.v1.DeleteReply
+	12, // [12:17] is the sub-list for method output_type
+	7,  // [7:12] is the sub-list for method input_type
+	7,  // [7:7] is the sub-list for extension type_name
+	7,  // [7:7] is the sub-list for extension extendee
+	0,  // [0:7] is the sub-list for field type_name
 }
 
 func init() { file_api_employee_v1_employee_proto_init() }
@@ -143,7 +779,7 @@ func file_api_employee_v1_employee_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_api_employee_v1_employee_proto_rawDesc), len(file_api_employee_v1_employee_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   2,
+			NumMessages:   11,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
