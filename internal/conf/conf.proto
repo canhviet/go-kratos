@@ -15,7 +15,8 @@ message Server {
 }
 
 message Auth {
-  string jwt_key = 1;
+  string jwt_secret = 1;
+  int32 token_exp = 2;
 }
 
 message HTTP {
@@ -29,4 +30,11 @@ message Data {
     string source = 2;
   }
   Database database = 1;
+
+  message Redis {
+    string addr = 1;
+    string password = 2;
+    int32 db = 3;
+  }
+  Redis redis = 2;
 }

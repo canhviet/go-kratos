@@ -25,9 +25,10 @@ func NewDB(c *conf.Data) (*gorm.DB, error) {
 		return nil, err
 	}
 
-	db.AutoMigrate(&model.User{})
+	db.AutoMigrate(&model.Timesheet{})
 	db.AutoMigrate(&model.Employee{})
 	db.AutoMigrate(&model.Payroll{})
+	db.AutoMigrate(&model.User{})
 
 	return db, nil
 }

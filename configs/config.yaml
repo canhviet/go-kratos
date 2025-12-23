@@ -3,5 +3,12 @@ server:
     addr: 0.0.0.0:8000
     timeout: 1
 
+data:
+  redis:
+    addr: redis:6379
+    password: "" 
+    db: 0
+
 auth:
-  jwt_ket: ${JWT_SECRET:R0G444tYluKFUjDloU1H9hHZkHP9E5JBHla0kC89CmA=}
+  jwt_secret: ${JWT_SECRET:R0G444tYluKFUjDloU1H9hHZkHP9E5JBHla0kC89CmA=}
+  token_exp: 1440

@@ -127,7 +127,8 @@ func (x *Server) GetHttp() *HTTP {
 
 type Auth struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	JwtKey        string                 `protobuf:"bytes,1,opt,name=jwt_key,json=jwtKey,proto3" json:"jwt_key,omitempty"`
+	JwtSecret     string                 `protobuf:"bytes,1,opt,name=jwt_secret,json=jwtSecret,proto3" json:"jwt_secret,omitempty"`
+	TokenExp      int32                  `protobuf:"varint,2,opt,name=token_exp,json=tokenExp,proto3" json:"token_exp,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -162,11 +163,18 @@ func (*Auth) Descriptor() ([]byte, []int) {
 	return file_internal_conf_conf_proto_rawDescGZIP(), []int{2}
 }
 
-func (x *Auth) GetJwtKey() string {
+func (x *Auth) GetJwtSecret() string {
 	if x != nil {
-		return x.JwtKey
+		return x.JwtSecret
 	}
 	return ""
+}
+
+func (x *Auth) GetTokenExp() int32 {
+	if x != nil {
+		return x.TokenExp
+	}
+	return 0
 }
 
 type HTTP struct {
@@ -224,6 +232,7 @@ func (x *HTTP) GetTimeout() int32 {
 type Data struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Database      *Data_Database         `protobuf:"bytes,1,opt,name=database,proto3" json:"database,omitempty"`
+	Redis         *Data_Redis            `protobuf:"bytes,2,opt,name=redis,proto3" json:"redis,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -261,6 +270,13 @@ func (*Data) Descriptor() ([]byte, []int) {
 func (x *Data) GetDatabase() *Data_Database {
 	if x != nil {
 		return x.Database
+	}
+	return nil
+}
+
+func (x *Data) GetRedis() *Data_Redis {
+	if x != nil {
+		return x.Redis
 	}
 	return nil
 }
@@ -317,6 +333,66 @@ func (x *Data_Database) GetSource() string {
 	return ""
 }
 
+type Data_Redis struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Addr          string                 `protobuf:"bytes,1,opt,name=addr,proto3" json:"addr,omitempty"`
+	Password      string                 `protobuf:"bytes,2,opt,name=password,proto3" json:"password,omitempty"`
+	Db            int32                  `protobuf:"varint,3,opt,name=db,proto3" json:"db,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *Data_Redis) Reset() {
+	*x = Data_Redis{}
+	mi := &file_internal_conf_conf_proto_msgTypes[6]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Data_Redis) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Data_Redis) ProtoMessage() {}
+
+func (x *Data_Redis) ProtoReflect() protoreflect.Message {
+	mi := &file_internal_conf_conf_proto_msgTypes[6]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Data_Redis.ProtoReflect.Descriptor instead.
+func (*Data_Redis) Descriptor() ([]byte, []int) {
+	return file_internal_conf_conf_proto_rawDescGZIP(), []int{4, 1}
+}
+
+func (x *Data_Redis) GetAddr() string {
+	if x != nil {
+		return x.Addr
+	}
+	return ""
+}
+
+func (x *Data_Redis) GetPassword() string {
+	if x != nil {
+		return x.Password
+	}
+	return ""
+}
+
+func (x *Data_Redis) GetDb() int32 {
+	if x != nil {
+		return x.Db
+	}
+	return 0
+}
+
 var File_internal_conf_conf_proto protoreflect.FileDescriptor
 
 const file_internal_conf_conf_proto_rawDesc = "" +
@@ -327,17 +403,24 @@ const file_internal_conf_conf_proto_rawDesc = "" +
 	"\x04data\x18\x02 \x01(\v2\x11.kratos.conf.DataR\x04data\x12%\n" +
 	"\x04auth\x18\x03 \x01(\v2\x11.kratos.conf.AuthR\x04auth\"/\n" +
 	"\x06Server\x12%\n" +
-	"\x04http\x18\x01 \x01(\v2\x11.kratos.conf.HTTPR\x04http\"\x1f\n" +
-	"\x04Auth\x12\x17\n" +
-	"\ajwt_key\x18\x01 \x01(\tR\x06jwtKey\"4\n" +
+	"\x04http\x18\x01 \x01(\v2\x11.kratos.conf.HTTPR\x04http\"B\n" +
+	"\x04Auth\x12\x1d\n" +
+	"\n" +
+	"jwt_secret\x18\x01 \x01(\tR\tjwtSecret\x12\x1b\n" +
+	"\ttoken_exp\x18\x02 \x01(\x05R\btokenExp\"4\n" +
 	"\x04HTTP\x12\x12\n" +
 	"\x04addr\x18\x01 \x01(\tR\x04addr\x12\x18\n" +
-	"\atimeout\x18\x02 \x01(\x05R\atimeout\"z\n" +
+	"\atimeout\x18\x02 \x01(\x05R\atimeout\"\xf2\x01\n" +
 	"\x04Data\x126\n" +
-	"\bdatabase\x18\x01 \x01(\v2\x1a.kratos.conf.Data.DatabaseR\bdatabase\x1a:\n" +
+	"\bdatabase\x18\x01 \x01(\v2\x1a.kratos.conf.Data.DatabaseR\bdatabase\x12-\n" +
+	"\x05redis\x18\x02 \x01(\v2\x17.kratos.conf.Data.RedisR\x05redis\x1a:\n" +
 	"\bDatabase\x12\x16\n" +
 	"\x06driver\x18\x01 \x01(\tR\x06driver\x12\x16\n" +
-	"\x06source\x18\x02 \x01(\tR\x06sourceB\x15Z\x13myapp/internal/confb\x06proto3"
+	"\x06source\x18\x02 \x01(\tR\x06source\x1aG\n" +
+	"\x05Redis\x12\x12\n" +
+	"\x04addr\x18\x01 \x01(\tR\x04addr\x12\x1a\n" +
+	"\bpassword\x18\x02 \x01(\tR\bpassword\x12\x0e\n" +
+	"\x02db\x18\x03 \x01(\x05R\x02dbB\x15Z\x13myapp/internal/confb\x06proto3"
 
 var (
 	file_internal_conf_conf_proto_rawDescOnce sync.Once
@@ -351,7 +434,7 @@ func file_internal_conf_conf_proto_rawDescGZIP() []byte {
 	return file_internal_conf_conf_proto_rawDescData
 }
 
-var file_internal_conf_conf_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
+var file_internal_conf_conf_proto_msgTypes = make([]protoimpl.MessageInfo, 7)
 var file_internal_conf_conf_proto_goTypes = []any{
 	(*Bootstrap)(nil),     // 0: kratos.conf.Bootstrap
 	(*Server)(nil),        // 1: kratos.conf.Server
@@ -359,6 +442,7 @@ var file_internal_conf_conf_proto_goTypes = []any{
 	(*HTTP)(nil),          // 3: kratos.conf.HTTP
 	(*Data)(nil),          // 4: kratos.conf.Data
 	(*Data_Database)(nil), // 5: kratos.conf.Data.Database
+	(*Data_Redis)(nil),    // 6: kratos.conf.Data.Redis
 }
 var file_internal_conf_conf_proto_depIdxs = []int32{
 	1, // 0: kratos.conf.Bootstrap.server:type_name -> kratos.conf.Server
@@ -366,11 +450,12 @@ var file_internal_conf_conf_proto_depIdxs = []int32{
 	2, // 2: kratos.conf.Bootstrap.auth:type_name -> kratos.conf.Auth
 	3, // 3: kratos.conf.Server.http:type_name -> kratos.conf.HTTP
 	5, // 4: kratos.conf.Data.database:type_name -> kratos.conf.Data.Database
-	5, // [5:5] is the sub-list for method output_type
-	5, // [5:5] is the sub-list for method input_type
-	5, // [5:5] is the sub-list for extension type_name
-	5, // [5:5] is the sub-list for extension extendee
-	0, // [0:5] is the sub-list for field type_name
+	6, // 5: kratos.conf.Data.redis:type_name -> kratos.conf.Data.Redis
+	6, // [6:6] is the sub-list for method output_type
+	6, // [6:6] is the sub-list for method input_type
+	6, // [6:6] is the sub-list for extension type_name
+	6, // [6:6] is the sub-list for extension extendee
+	0, // [0:6] is the sub-list for field type_name
 }
 
 func init() { file_internal_conf_conf_proto_init() }
@@ -384,7 +469,7 @@ func file_internal_conf_conf_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_internal_conf_conf_proto_rawDesc), len(file_internal_conf_conf_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   6,
+			NumMessages:   7,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

@@ -2,24 +2,28 @@ package repository
 
 import (
 	"context"
+
 	"myapp/internal/data"
 	"myapp/internal/data/model"
 )
 
-type userRepo struct {
+type UserRepo struct {
 	data *data.Data
 }
 
-func NewUserRepo(data *data.Data) *userRepo {
-	return &userRepo{data: data}
+func NewUserRepo(data *data.Data) *UserRepo {
+	return &UserRepo{data: data}
 }
 
-func (r *userRepo) Create(ctx context.Context, u *model.User) error {
-	return r.data.DB.WithContext(ctx).Create(u).Error
+func (r *UserRepo) Create(ctx context.Context, user *model.User) error {
+	return r.data.DB.WithContext(ctx).Create(user).Error
 }
 
-func (r *userRepo) List(ctx context.Context) ([]model.User, error) {
-	var users []model.User
-	err := r.data.DB.WithContext(ctx).Find(&users).Error
-	return users, err
+func (r *UserRepo) GetByUsername(ctx context.Context, username string) (*model.User, error) {
+	var user model.User
+	err := r.data.DB.WithContext(ctx).Where("username = ?", username).First(&user).Error
+	if err != nil {
+		return nil, err
+	}
+	return &user, nil
 }

@@ -1,10 +1,12 @@
 package model
 
-import "gorm.io/gorm"
+import (
+	"gorm.io/gorm"
+)
 
 type User struct {
 	gorm.Model
-	Name  string
-	Email string
+	Username string `gorm:"type:varchar(255);not null"`
+	Email    string `gorm:"type:varchar(255);unique;not null"`
+	Password string `gorm:"type:varchar(255);not null"`
 }
-
