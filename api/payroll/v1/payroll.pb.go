@@ -25,10 +25,8 @@ const (
 type CalculatePayrollRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	EmployeeId    uint32                 `protobuf:"varint,1,opt,name=employee_id,json=employeeId,proto3" json:"employee_id,omitempty"`
-	WorkingDays   int32                  `protobuf:"varint,2,opt,name=working_days,json=workingDays,proto3" json:"working_days,omitempty"`
-	OvertimeHours float64                `protobuf:"fixed64,3,opt,name=overtime_hours,json=overtimeHours,proto3" json:"overtime_hours,omitempty"`
-	Allowances    float64                `protobuf:"fixed64,4,opt,name=allowances,proto3" json:"allowances,omitempty"`
-	MonthYear     string                 `protobuf:"bytes,5,opt,name=month_year,json=monthYear,proto3" json:"month_year,omitempty"` // Format: YYYY-MM
+	Allowances    float64                `protobuf:"fixed64,2,opt,name=allowances,proto3" json:"allowances,omitempty"`
+	MonthYear     string                 `protobuf:"bytes,3,opt,name=month_year,json=monthYear,proto3" json:"month_year,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -70,20 +68,6 @@ func (x *CalculatePayrollRequest) GetEmployeeId() uint32 {
 	return 0
 }
 
-func (x *CalculatePayrollRequest) GetWorkingDays() int32 {
-	if x != nil {
-		return x.WorkingDays
-	}
-	return 0
-}
-
-func (x *CalculatePayrollRequest) GetOvertimeHours() float64 {
-	if x != nil {
-		return x.OvertimeHours
-	}
-	return 0
-}
-
 func (x *CalculatePayrollRequest) GetAllowances() float64 {
 	if x != nil {
 		return x.Allowances
@@ -103,6 +87,9 @@ type CalculatePayrollReply struct {
 	GrossSalary   float64                `protobuf:"fixed64,1,opt,name=gross_salary,json=grossSalary,proto3" json:"gross_salary,omitempty"`
 	NetSalary     float64                `protobuf:"fixed64,2,opt,name=net_salary,json=netSalary,proto3" json:"net_salary,omitempty"`
 	Deductions    float64                `protobuf:"fixed64,3,opt,name=deductions,proto3" json:"deductions,omitempty"`
+	WorkingDays   int32                  `protobuf:"varint,4,opt,name=working_days,json=workingDays,proto3" json:"working_days,omitempty"`
+	OvertimeHours float64                `protobuf:"fixed64,5,opt,name=overtime_hours,json=overtimeHours,proto3" json:"overtime_hours,omitempty"`
+	LeaveDays     int32                  `protobuf:"varint,6,opt,name=leave_days,json=leaveDays,proto3" json:"leave_days,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -158,29 +145,261 @@ func (x *CalculatePayrollReply) GetDeductions() float64 {
 	return 0
 }
 
+func (x *CalculatePayrollReply) GetWorkingDays() int32 {
+	if x != nil {
+		return x.WorkingDays
+	}
+	return 0
+}
+
+func (x *CalculatePayrollReply) GetOvertimeHours() float64 {
+	if x != nil {
+		return x.OvertimeHours
+	}
+	return 0
+}
+
+func (x *CalculatePayrollReply) GetLeaveDays() int32 {
+	if x != nil {
+		return x.LeaveDays
+	}
+	return 0
+}
+
+type GetPayrollsByMonthRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	EmployeeId    uint32                 `protobuf:"varint,1,opt,name=employee_id,json=employeeId,proto3" json:"employee_id,omitempty"`
+	Allowances    float64                `protobuf:"fixed64,2,opt,name=allowances,proto3" json:"allowances,omitempty"`
+	MonthYear     string                 `protobuf:"bytes,3,opt,name=month_year,json=monthYear,proto3" json:"month_year,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetPayrollsByMonthRequest) Reset() {
+	*x = GetPayrollsByMonthRequest{}
+	mi := &file_api_payroll_v1_payroll_proto_msgTypes[2]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetPayrollsByMonthRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetPayrollsByMonthRequest) ProtoMessage() {}
+
+func (x *GetPayrollsByMonthRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_api_payroll_v1_payroll_proto_msgTypes[2]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetPayrollsByMonthRequest.ProtoReflect.Descriptor instead.
+func (*GetPayrollsByMonthRequest) Descriptor() ([]byte, []int) {
+	return file_api_payroll_v1_payroll_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *GetPayrollsByMonthRequest) GetEmployeeId() uint32 {
+	if x != nil {
+		return x.EmployeeId
+	}
+	return 0
+}
+
+func (x *GetPayrollsByMonthRequest) GetAllowances() float64 {
+	if x != nil {
+		return x.Allowances
+	}
+	return 0
+}
+
+func (x *GetPayrollsByMonthRequest) GetMonthYear() string {
+	if x != nil {
+		return x.MonthYear
+	}
+	return ""
+}
+
+type PayrollItem struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	GrossSalary   float64                `protobuf:"fixed64,1,opt,name=gross_salary,json=grossSalary,proto3" json:"gross_salary,omitempty"`
+	NetSalary     float64                `protobuf:"fixed64,2,opt,name=net_salary,json=netSalary,proto3" json:"net_salary,omitempty"`
+	Deductions    float64                `protobuf:"fixed64,3,opt,name=deductions,proto3" json:"deductions,omitempty"`
+	WorkingDays   int32                  `protobuf:"varint,4,opt,name=working_days,json=workingDays,proto3" json:"working_days,omitempty"`
+	OvertimeHours float64                `protobuf:"fixed64,5,opt,name=overtime_hours,json=overtimeHours,proto3" json:"overtime_hours,omitempty"`
+	LeaveDays     int32                  `protobuf:"varint,6,opt,name=leave_days,json=leaveDays,proto3" json:"leave_days,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *PayrollItem) Reset() {
+	*x = PayrollItem{}
+	mi := &file_api_payroll_v1_payroll_proto_msgTypes[3]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *PayrollItem) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*PayrollItem) ProtoMessage() {}
+
+func (x *PayrollItem) ProtoReflect() protoreflect.Message {
+	mi := &file_api_payroll_v1_payroll_proto_msgTypes[3]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use PayrollItem.ProtoReflect.Descriptor instead.
+func (*PayrollItem) Descriptor() ([]byte, []int) {
+	return file_api_payroll_v1_payroll_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *PayrollItem) GetGrossSalary() float64 {
+	if x != nil {
+		return x.GrossSalary
+	}
+	return 0
+}
+
+func (x *PayrollItem) GetNetSalary() float64 {
+	if x != nil {
+		return x.NetSalary
+	}
+	return 0
+}
+
+func (x *PayrollItem) GetDeductions() float64 {
+	if x != nil {
+		return x.Deductions
+	}
+	return 0
+}
+
+func (x *PayrollItem) GetWorkingDays() int32 {
+	if x != nil {
+		return x.WorkingDays
+	}
+	return 0
+}
+
+func (x *PayrollItem) GetOvertimeHours() float64 {
+	if x != nil {
+		return x.OvertimeHours
+	}
+	return 0
+}
+
+func (x *PayrollItem) GetLeaveDays() int32 {
+	if x != nil {
+		return x.LeaveDays
+	}
+	return 0
+}
+
+type GetPayrollsByMonthReply struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Items         []*PayrollItem         `protobuf:"bytes,1,rep,name=items,proto3" json:"items,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetPayrollsByMonthReply) Reset() {
+	*x = GetPayrollsByMonthReply{}
+	mi := &file_api_payroll_v1_payroll_proto_msgTypes[4]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetPayrollsByMonthReply) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetPayrollsByMonthReply) ProtoMessage() {}
+
+func (x *GetPayrollsByMonthReply) ProtoReflect() protoreflect.Message {
+	mi := &file_api_payroll_v1_payroll_proto_msgTypes[4]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetPayrollsByMonthReply.ProtoReflect.Descriptor instead.
+func (*GetPayrollsByMonthReply) Descriptor() ([]byte, []int) {
+	return file_api_payroll_v1_payroll_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *GetPayrollsByMonthReply) GetItems() []*PayrollItem {
+	if x != nil {
+		return x.Items
+	}
+	return nil
+}
+
 var File_api_payroll_v1_payroll_proto protoreflect.FileDescriptor
 
 const file_api_payroll_v1_payroll_proto_rawDesc = "" +
 	"\n" +
 	"\x1capi/payroll/v1/payroll.proto\x12\n" +
-	"payroll.v1\x1a\x1cgoogle/api/annotations.proto\"\xc3\x01\n" +
+	"payroll.v1\x1a\x1cgoogle/api/annotations.proto\"y\n" +
 	"\x17CalculatePayrollRequest\x12\x1f\n" +
 	"\vemployee_id\x18\x01 \x01(\rR\n" +
-	"employeeId\x12!\n" +
-	"\fworking_days\x18\x02 \x01(\x05R\vworkingDays\x12%\n" +
-	"\x0eovertime_hours\x18\x03 \x01(\x01R\rovertimeHours\x12\x1e\n" +
+	"employeeId\x12\x1e\n" +
 	"\n" +
-	"allowances\x18\x04 \x01(\x01R\n" +
+	"allowances\x18\x02 \x01(\x01R\n" +
 	"allowances\x12\x1d\n" +
 	"\n" +
-	"month_year\x18\x05 \x01(\tR\tmonthYear\"y\n" +
+	"month_year\x18\x03 \x01(\tR\tmonthYear\"\xe2\x01\n" +
 	"\x15CalculatePayrollReply\x12!\n" +
 	"\fgross_salary\x18\x01 \x01(\x01R\vgrossSalary\x12\x1d\n" +
 	"\n" +
 	"net_salary\x18\x02 \x01(\x01R\tnetSalary\x12\x1e\n" +
 	"\n" +
 	"deductions\x18\x03 \x01(\x01R\n" +
-	"deductions2\x87\x01\n" +
+	"deductions\x12!\n" +
+	"\fworking_days\x18\x04 \x01(\x05R\vworkingDays\x12%\n" +
+	"\x0eovertime_hours\x18\x05 \x01(\x01R\rovertimeHours\x12\x1d\n" +
+	"\n" +
+	"leave_days\x18\x06 \x01(\x05R\tleaveDays\"{\n" +
+	"\x19GetPayrollsByMonthRequest\x12\x1f\n" +
+	"\vemployee_id\x18\x01 \x01(\rR\n" +
+	"employeeId\x12\x1e\n" +
+	"\n" +
+	"allowances\x18\x02 \x01(\x01R\n" +
+	"allowances\x12\x1d\n" +
+	"\n" +
+	"month_year\x18\x03 \x01(\tR\tmonthYear\"\xd8\x01\n" +
+	"\vPayrollItem\x12!\n" +
+	"\fgross_salary\x18\x01 \x01(\x01R\vgrossSalary\x12\x1d\n" +
+	"\n" +
+	"net_salary\x18\x02 \x01(\x01R\tnetSalary\x12\x1e\n" +
+	"\n" +
+	"deductions\x18\x03 \x01(\x01R\n" +
+	"deductions\x12!\n" +
+	"\fworking_days\x18\x04 \x01(\x05R\vworkingDays\x12%\n" +
+	"\x0eovertime_hours\x18\x05 \x01(\x01R\rovertimeHours\x12\x1d\n" +
+	"\n" +
+	"leave_days\x18\x06 \x01(\x05R\tleaveDays\"H\n" +
+	"\x17GetPayrollsByMonthReply\x12-\n" +
+	"\x05items\x18\x01 \x03(\v2\x17.payroll.v1.PayrollItemR\x05items2\x87\x01\n" +
 	"\aPayroll\x12|\n" +
 	"\x10CalculatePayroll\x12#.payroll.v1.CalculatePayrollRequest\x1a!.payroll.v1.CalculatePayrollReply\" \x82\xd3\xe4\x93\x02\x1a:\x01*\"\x15/v1/payroll/calculateB\x19Z\x17myapp/api/payroll/v1;v1b\x06proto3"
 
@@ -196,19 +415,23 @@ func file_api_payroll_v1_payroll_proto_rawDescGZIP() []byte {
 	return file_api_payroll_v1_payroll_proto_rawDescData
 }
 
-var file_api_payroll_v1_payroll_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
+var file_api_payroll_v1_payroll_proto_msgTypes = make([]protoimpl.MessageInfo, 5)
 var file_api_payroll_v1_payroll_proto_goTypes = []any{
-	(*CalculatePayrollRequest)(nil), // 0: payroll.v1.CalculatePayrollRequest
-	(*CalculatePayrollReply)(nil),   // 1: payroll.v1.CalculatePayrollReply
+	(*CalculatePayrollRequest)(nil),   // 0: payroll.v1.CalculatePayrollRequest
+	(*CalculatePayrollReply)(nil),     // 1: payroll.v1.CalculatePayrollReply
+	(*GetPayrollsByMonthRequest)(nil), // 2: payroll.v1.GetPayrollsByMonthRequest
+	(*PayrollItem)(nil),               // 3: payroll.v1.PayrollItem
+	(*GetPayrollsByMonthReply)(nil),   // 4: payroll.v1.GetPayrollsByMonthReply
 }
 var file_api_payroll_v1_payroll_proto_depIdxs = []int32{
-	0, // 0: payroll.v1.Payroll.CalculatePayroll:input_type -> payroll.v1.CalculatePayrollRequest
-	1, // 1: payroll.v1.Payroll.CalculatePayroll:output_type -> payroll.v1.CalculatePayrollReply
-	1, // [1:2] is the sub-list for method output_type
-	0, // [0:1] is the sub-list for method input_type
-	0, // [0:0] is the sub-list for extension type_name
-	0, // [0:0] is the sub-list for extension extendee
-	0, // [0:0] is the sub-list for field type_name
+	3, // 0: payroll.v1.GetPayrollsByMonthReply.items:type_name -> payroll.v1.PayrollItem
+	0, // 1: payroll.v1.Payroll.CalculatePayroll:input_type -> payroll.v1.CalculatePayrollRequest
+	1, // 2: payroll.v1.Payroll.CalculatePayroll:output_type -> payroll.v1.CalculatePayrollReply
+	2, // [2:3] is the sub-list for method output_type
+	1, // [1:2] is the sub-list for method input_type
+	1, // [1:1] is the sub-list for extension type_name
+	1, // [1:1] is the sub-list for extension extendee
+	0, // [0:1] is the sub-list for field type_name
 }
 
 func init() { file_api_payroll_v1_payroll_proto_init() }
@@ -222,7 +445,7 @@ func file_api_payroll_v1_payroll_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_api_payroll_v1_payroll_proto_rawDesc), len(file_api_payroll_v1_payroll_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   2,
+			NumMessages:   5,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

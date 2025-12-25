@@ -79,7 +79,7 @@ func main() {
 
 	// Usecases (Biz layer)
 	employeeUsecase := biz.NewEmployeeUsecase(employeeRepo)
-	payrollUsecase := biz.NewPayrollUsecase(payrollRepo)
+	payrollUsecase := biz.NewPayrollUsecase(payrollRepo, employeeRepo, timesheetRepo)
 	timesheetUsecase := biz.NewTimesheetUsecase(timesheetRepo)
 	authUsecase := biz.NewAuthUsecase(
 		userRepo,

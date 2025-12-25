@@ -35,14 +35,14 @@ type EmployeeHTTPServer interface {
 
 func RegisterEmployeeHTTPServer(s *http.Server, srv EmployeeHTTPServer) {
 	r := s.Route("/")
-	r.GET("/employees", _Employee_List1_HTTP_Handler(srv))
-	r.GET("/employees/{id}", _Employee_Get1_HTTP_Handler(srv))
+	r.GET("/employees", _Employee_List0_HTTP_Handler(srv))
+	r.GET("/employees/{id}", _Employee_Get0_HTTP_Handler(srv))
 	r.POST("/employees", _Employee_Create1_HTTP_Handler(srv))
-	r.PUT("/employees/{id}", _Employee_Update1_HTTP_Handler(srv))
-	r.DELETE("/employees/{id}", _Employee_Delete1_HTTP_Handler(srv))
+	r.PUT("/employees/{id}", _Employee_Update0_HTTP_Handler(srv))
+	r.DELETE("/employees/{id}", _Employee_Delete0_HTTP_Handler(srv))
 }
 
-func _Employee_List1_HTTP_Handler(srv EmployeeHTTPServer) func(ctx http.Context) error {
+func _Employee_List0_HTTP_Handler(srv EmployeeHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in ListRequest
 		if err := ctx.BindQuery(&in); err != nil {
@@ -61,7 +61,7 @@ func _Employee_List1_HTTP_Handler(srv EmployeeHTTPServer) func(ctx http.Context)
 	}
 }
 
-func _Employee_Get1_HTTP_Handler(srv EmployeeHTTPServer) func(ctx http.Context) error {
+func _Employee_Get0_HTTP_Handler(srv EmployeeHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in GetRequest
 		if err := ctx.BindQuery(&in); err != nil {
@@ -105,7 +105,7 @@ func _Employee_Create1_HTTP_Handler(srv EmployeeHTTPServer) func(ctx http.Contex
 	}
 }
 
-func _Employee_Update1_HTTP_Handler(srv EmployeeHTTPServer) func(ctx http.Context) error {
+func _Employee_Update0_HTTP_Handler(srv EmployeeHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in UpdateRequest
 		if err := ctx.Bind(&in); err != nil {
@@ -130,7 +130,7 @@ func _Employee_Update1_HTTP_Handler(srv EmployeeHTTPServer) func(ctx http.Contex
 	}
 }
 
-func _Employee_Delete1_HTTP_Handler(srv EmployeeHTTPServer) func(ctx http.Context) error {
+func _Employee_Delete0_HTTP_Handler(srv EmployeeHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in DeleteRequest
 		if err := ctx.BindQuery(&in); err != nil {

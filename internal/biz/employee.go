@@ -5,21 +5,14 @@ import (
 	"time"
 
 	"myapp/internal/data/model"
+	"myapp/internal/repository"
 )
 
-type EmployeeRepo interface {
-	List(ctx context.Context, pageSize int, pageToken string) ([]*model.Employee, string, error)
-	Get(ctx context.Context, id uint32) (*model.Employee, error)
-	Create(ctx context.Context, employee *model.Employee) error
-	Update(ctx context.Context, employee *model.Employee) error
-	Delete(ctx context.Context, id uint32) error
-}
-
 type EmployeeUsecase struct {
-	repo EmployeeRepo
+	repo repository.EmployeeRepo
 }
 
-func NewEmployeeUsecase(repo EmployeeRepo) *EmployeeUsecase {
+func NewEmployeeUsecase(repo repository.EmployeeRepo) *EmployeeUsecase {
 	return &EmployeeUsecase{repo: repo}
 }
 

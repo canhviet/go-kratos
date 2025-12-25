@@ -1,3 +1,4 @@
+// api/timesheet/v1/timesheet.proto
 syntax = "proto3";
 
 package timesheet.v1;
@@ -7,94 +8,25 @@ import "google/protobuf/timestamp.proto";
 
 option go_package = "myapp/api/timesheet/v1;v1";
 
-message TimesheetItem {
-  uint32 id = 1;
-  uint32 employee_id = 2;
-  google.protobuf.Timestamp month_year = 3;
-  int32 working_days = 4;
-  double overtime_hours = 5;
-  int32 leave_days = 6;
-}
-
-message ListRequest {
-  int32 page_size = 1;
-  string page_token = 2;
-}
-
-message ListReply {
-  repeated TimesheetItem items = 1;
-  string next_page_token = 2;
-}
-
-message GetRequest {
-  uint32 id = 1;
-}
-
-message GetReply {
-  TimesheetItem item = 1;
-}
-
-message CreateRequest {
+message CreateTimesheetRequest {
   uint32 employee_id = 1;
-  google.protobuf.Timestamp month_year = 2;
-  int32 working_days = 3;
+  google.protobuf.Timestamp work_date = 2;  
+  double hours_worked = 3;
   double overtime_hours = 4;
-  int32 leave_days = 5;
+  bool is_leave = 5;
+  string leave_type = 6;
+  string note = 7;
 }
 
-message CreateReply {
-  TimesheetItem item = 1;
+message CreateTimesheetReply {
+  string message = 1;
 }
-
-message UpdateRequest {
-  uint32 id = 1;
-  uint32 employee_id = 2;
-  google.protobuf.Timestamp month_year = 3;
-  int32 working_days = 4;
-  double overtime_hours = 5;
-  int32 leave_days = 6;
-}
-
-message UpdateReply {
-  TimesheetItem item = 1;
-}
-
-message DeleteRequest {
-  uint32 id = 1;
-}
-
-message DeleteReply {}
 
 service Timesheet {
-  rpc List (ListRequest) returns (ListReply) {
+  rpc Create (CreateTimesheetRequest) returns (CreateTimesheetReply) {
     option (google.api.http) = {
-      get: "/timesheets";
-    };
-  }
-
-  rpc Get (GetRequest) returns (GetReply) {
-    option (google.api.http) = {
-      get: "/timesheets/{id}";
-    };
-  }
-
-  rpc Create (CreateRequest) returns (CreateReply) {
-    option (google.api.http) = {
-      post: "/timesheets";
+      post: "/v1/timesheets";
       body: "*";
-    };
-  }
-
-  rpc Update (UpdateRequest) returns (UpdateReply) {
-    option (google.api.http) = {
-      put: "/timesheets/{id}";
-      body: "*";
-    };
-  }
-
-  rpc Delete (DeleteRequest) returns (DeleteReply) {
-    option (google.api.http) = {
-      delete: "/timesheets/{id}";
     };
   }
 }

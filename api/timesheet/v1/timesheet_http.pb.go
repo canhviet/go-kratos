@@ -20,72 +20,19 @@ var _ = binding.EncodeURL
 const _ = http.SupportPackageIsVersion1
 
 const OperationTimesheetCreate = "/timesheet.v1.Timesheet/Create"
-const OperationTimesheetDelete = "/timesheet.v1.Timesheet/Delete"
-const OperationTimesheetGet = "/timesheet.v1.Timesheet/Get"
-const OperationTimesheetList = "/timesheet.v1.Timesheet/List"
-const OperationTimesheetUpdate = "/timesheet.v1.Timesheet/Update"
 
 type TimesheetHTTPServer interface {
-	Create(context.Context, *CreateRequest) (*CreateReply, error)
-	Delete(context.Context, *DeleteRequest) (*DeleteReply, error)
-	Get(context.Context, *GetRequest) (*GetReply, error)
-	List(context.Context, *ListRequest) (*ListReply, error)
-	Update(context.Context, *UpdateRequest) (*UpdateReply, error)
+	Create(context.Context, *CreateTimesheetRequest) (*CreateTimesheetReply, error)
 }
 
 func RegisterTimesheetHTTPServer(s *http.Server, srv TimesheetHTTPServer) {
 	r := s.Route("/")
-	r.GET("/timesheets", _Timesheet_List0_HTTP_Handler(srv))
-	r.GET("/timesheets/{id}", _Timesheet_Get0_HTTP_Handler(srv))
-	r.POST("/timesheets", _Timesheet_Create0_HTTP_Handler(srv))
-	r.PUT("/timesheets/{id}", _Timesheet_Update0_HTTP_Handler(srv))
-	r.DELETE("/timesheets/{id}", _Timesheet_Delete0_HTTP_Handler(srv))
-}
-
-func _Timesheet_List0_HTTP_Handler(srv TimesheetHTTPServer) func(ctx http.Context) error {
-	return func(ctx http.Context) error {
-		var in ListRequest
-		if err := ctx.BindQuery(&in); err != nil {
-			return err
-		}
-		http.SetOperation(ctx, OperationTimesheetList)
-		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
-			return srv.List(ctx, req.(*ListRequest))
-		})
-		out, err := h(ctx, &in)
-		if err != nil {
-			return err
-		}
-		reply := out.(*ListReply)
-		return ctx.Result(200, reply)
-	}
-}
-
-func _Timesheet_Get0_HTTP_Handler(srv TimesheetHTTPServer) func(ctx http.Context) error {
-	return func(ctx http.Context) error {
-		var in GetRequest
-		if err := ctx.BindQuery(&in); err != nil {
-			return err
-		}
-		if err := ctx.BindVars(&in); err != nil {
-			return err
-		}
-		http.SetOperation(ctx, OperationTimesheetGet)
-		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
-			return srv.Get(ctx, req.(*GetRequest))
-		})
-		out, err := h(ctx, &in)
-		if err != nil {
-			return err
-		}
-		reply := out.(*GetReply)
-		return ctx.Result(200, reply)
-	}
+	r.POST("/v1/timesheets", _Timesheet_Create0_HTTP_Handler(srv))
 }
 
 func _Timesheet_Create0_HTTP_Handler(srv TimesheetHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
-		var in CreateRequest
+		var in CreateTimesheetRequest
 		if err := ctx.Bind(&in); err != nil {
 			return err
 		}
@@ -94,70 +41,19 @@ func _Timesheet_Create0_HTTP_Handler(srv TimesheetHTTPServer) func(ctx http.Cont
 		}
 		http.SetOperation(ctx, OperationTimesheetCreate)
 		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
-			return srv.Create(ctx, req.(*CreateRequest))
+			return srv.Create(ctx, req.(*CreateTimesheetRequest))
 		})
 		out, err := h(ctx, &in)
 		if err != nil {
 			return err
 		}
-		reply := out.(*CreateReply)
-		return ctx.Result(200, reply)
-	}
-}
-
-func _Timesheet_Update0_HTTP_Handler(srv TimesheetHTTPServer) func(ctx http.Context) error {
-	return func(ctx http.Context) error {
-		var in UpdateRequest
-		if err := ctx.Bind(&in); err != nil {
-			return err
-		}
-		if err := ctx.BindQuery(&in); err != nil {
-			return err
-		}
-		if err := ctx.BindVars(&in); err != nil {
-			return err
-		}
-		http.SetOperation(ctx, OperationTimesheetUpdate)
-		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
-			return srv.Update(ctx, req.(*UpdateRequest))
-		})
-		out, err := h(ctx, &in)
-		if err != nil {
-			return err
-		}
-		reply := out.(*UpdateReply)
-		return ctx.Result(200, reply)
-	}
-}
-
-func _Timesheet_Delete0_HTTP_Handler(srv TimesheetHTTPServer) func(ctx http.Context) error {
-	return func(ctx http.Context) error {
-		var in DeleteRequest
-		if err := ctx.BindQuery(&in); err != nil {
-			return err
-		}
-		if err := ctx.BindVars(&in); err != nil {
-			return err
-		}
-		http.SetOperation(ctx, OperationTimesheetDelete)
-		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
-			return srv.Delete(ctx, req.(*DeleteRequest))
-		})
-		out, err := h(ctx, &in)
-		if err != nil {
-			return err
-		}
-		reply := out.(*DeleteReply)
+		reply := out.(*CreateTimesheetReply)
 		return ctx.Result(200, reply)
 	}
 }
 
 type TimesheetHTTPClient interface {
-	Create(ctx context.Context, req *CreateRequest, opts ...http.CallOption) (rsp *CreateReply, err error)
-	Delete(ctx context.Context, req *DeleteRequest, opts ...http.CallOption) (rsp *DeleteReply, err error)
-	Get(ctx context.Context, req *GetRequest, opts ...http.CallOption) (rsp *GetReply, err error)
-	List(ctx context.Context, req *ListRequest, opts ...http.CallOption) (rsp *ListReply, err error)
-	Update(ctx context.Context, req *UpdateRequest, opts ...http.CallOption) (rsp *UpdateReply, err error)
+	Create(ctx context.Context, req *CreateTimesheetRequest, opts ...http.CallOption) (rsp *CreateTimesheetReply, err error)
 }
 
 type TimesheetHTTPClientImpl struct {
@@ -168,65 +64,13 @@ func NewTimesheetHTTPClient(client *http.Client) TimesheetHTTPClient {
 	return &TimesheetHTTPClientImpl{client}
 }
 
-func (c *TimesheetHTTPClientImpl) Create(ctx context.Context, in *CreateRequest, opts ...http.CallOption) (*CreateReply, error) {
-	var out CreateReply
-	pattern := "/timesheets"
+func (c *TimesheetHTTPClientImpl) Create(ctx context.Context, in *CreateTimesheetRequest, opts ...http.CallOption) (*CreateTimesheetReply, error) {
+	var out CreateTimesheetReply
+	pattern := "/v1/timesheets"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation(OperationTimesheetCreate))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "POST", path, in, &out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return &out, nil
-}
-
-func (c *TimesheetHTTPClientImpl) Delete(ctx context.Context, in *DeleteRequest, opts ...http.CallOption) (*DeleteReply, error) {
-	var out DeleteReply
-	pattern := "/timesheets/{id}"
-	path := binding.EncodeURL(pattern, in, true)
-	opts = append(opts, http.Operation(OperationTimesheetDelete))
-	opts = append(opts, http.PathTemplate(pattern))
-	err := c.cc.Invoke(ctx, "DELETE", path, nil, &out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return &out, nil
-}
-
-func (c *TimesheetHTTPClientImpl) Get(ctx context.Context, in *GetRequest, opts ...http.CallOption) (*GetReply, error) {
-	var out GetReply
-	pattern := "/timesheets/{id}"
-	path := binding.EncodeURL(pattern, in, true)
-	opts = append(opts, http.Operation(OperationTimesheetGet))
-	opts = append(opts, http.PathTemplate(pattern))
-	err := c.cc.Invoke(ctx, "GET", path, nil, &out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return &out, nil
-}
-
-func (c *TimesheetHTTPClientImpl) List(ctx context.Context, in *ListRequest, opts ...http.CallOption) (*ListReply, error) {
-	var out ListReply
-	pattern := "/timesheets"
-	path := binding.EncodeURL(pattern, in, true)
-	opts = append(opts, http.Operation(OperationTimesheetList))
-	opts = append(opts, http.PathTemplate(pattern))
-	err := c.cc.Invoke(ctx, "GET", path, nil, &out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return &out, nil
-}
-
-func (c *TimesheetHTTPClientImpl) Update(ctx context.Context, in *UpdateRequest, opts ...http.CallOption) (*UpdateReply, error) {
-	var out UpdateReply
-	pattern := "/timesheets/{id}"
-	path := binding.EncodeURL(pattern, in, false)
-	opts = append(opts, http.Operation(OperationTimesheetUpdate))
-	opts = append(opts, http.PathTemplate(pattern))
-	err := c.cc.Invoke(ctx, "PUT", path, in, &out, opts...)
 	if err != nil {
 		return nil, err
 	}

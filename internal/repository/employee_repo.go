@@ -2,18 +2,41 @@ package repository
 
 import (
 	"context"
+	"errors"
 	"strconv"
 
 	"myapp/internal/data"
 	"myapp/internal/data/model"
+
+	"gorm.io/gorm"
 )
 
 type employeeRepo struct {
 	data *data.Data
 }
 
+type EmployeeRepo interface {
+	List(ctx context.Context, pageSize int, pageToken string) ([]*model.Employee, string, error)
+	Get(ctx context.Context, id uint32) (*model.Employee, error)
+	Create(ctx context.Context, employee *model.Employee) error
+	Update(ctx context.Context, employee *model.Employee) error
+	Delete(ctx context.Context, id uint32) error
+	GetEmployeeByID(ctx context.Context, id uint) (*model.Employee, error)
+}
+
 func NewEmployeeRepo(data *data.Data) *employeeRepo {
 	return &employeeRepo{data: data}
+}
+
+func (r *employeeRepo) GetEmployeeByID(ctx context.Context, id uint) (*model.Employee, error) {
+	var emp model.Employee
+	if err := r.data.DB.WithContext(ctx).First(&emp, id).Error; err != nil {
+		if err == gorm.ErrRecordNotFound {
+			return nil, errors.New("employee not found")
+		}
+		return nil, err
+	}
+	return &emp, nil
 }
 
 func (r *employeeRepo) List(ctx context.Context, pageSize int, pageToken string) ([]*model.Employee, string, error) {

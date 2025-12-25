@@ -8,23 +8,43 @@ option go_package = "myapp/api/payroll/v1;v1";
 
 message CalculatePayrollRequest {
   uint32 employee_id = 1;
-  int32 working_days = 2;
-  double overtime_hours = 3;
-  double allowances = 4;
-  string month_year = 5;  // Format: YYYY-MM
+  double allowances = 2;  
+  string month_year = 3;  
 }
 
 message CalculatePayrollReply {
   double gross_salary = 1;
   double net_salary = 2;
   double deductions = 3;
+  int32 working_days = 4;  
+  double overtime_hours = 5;  
+  int32 leave_days = 6; 
+}
+
+message GetPayrollsByMonthRequest {
+  uint32 employee_id = 1;
+  double allowances = 2;
+  string month_year = 3;  
+}
+
+message PayrollItem {
+  double gross_salary = 1;
+  double net_salary = 2;
+  double deductions = 3;
+  int32 working_days = 4;
+  double overtime_hours = 5;
+  int32 leave_days = 6;
+}
+
+message GetPayrollsByMonthReply {
+  repeated PayrollItem items = 1;
 }
 
 service Payroll {
   rpc CalculatePayroll (CalculatePayrollRequest) returns (CalculatePayrollReply) {
     option (google.api.http) = {
-      post: "/v1/payroll/calculate"
-      body: "*"
+      post: "/v1/payroll/calculate";
+      body: "*";
     };
   }
 }
