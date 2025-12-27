@@ -6,6 +6,16 @@ import "google/api/annotations.proto";
 
 option go_package = "myapp/api/payroll/v1;v1";
 
+message ExportPayrollPDFRequest {
+  uint32 employee_id = 1;
+  string month_year = 2;  
+}
+
+message ExportPayrollPDFReply {
+  bytes pdf_data = 1;
+  string filename = 2;
+}
+
 message CalculatePayrollRequest {
   uint32 employee_id = 1;
   double allowances = 2;  
@@ -45,6 +55,13 @@ service Payroll {
     option (google.api.http) = {
       post: "/v1/payroll/calculate";
       body: "*";
+    };
+  }
+
+  rpc ExportPayrollPDF (ExportPayrollPDFRequest) returns (ExportPayrollPDFReply) {
+    option (google.api.http) = {
+      get: "/v1/payroll/{employee_id}/payslip/{month_year}.pdf";
+      response_body: "*";
     };
   }
 }

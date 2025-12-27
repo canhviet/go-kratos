@@ -22,6 +22,110 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+type ExportPayrollPDFRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	EmployeeId    uint32                 `protobuf:"varint,1,opt,name=employee_id,json=employeeId,proto3" json:"employee_id,omitempty"`
+	MonthYear     string                 `protobuf:"bytes,2,opt,name=month_year,json=monthYear,proto3" json:"month_year,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ExportPayrollPDFRequest) Reset() {
+	*x = ExportPayrollPDFRequest{}
+	mi := &file_api_payroll_v1_payroll_proto_msgTypes[0]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ExportPayrollPDFRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ExportPayrollPDFRequest) ProtoMessage() {}
+
+func (x *ExportPayrollPDFRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_api_payroll_v1_payroll_proto_msgTypes[0]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ExportPayrollPDFRequest.ProtoReflect.Descriptor instead.
+func (*ExportPayrollPDFRequest) Descriptor() ([]byte, []int) {
+	return file_api_payroll_v1_payroll_proto_rawDescGZIP(), []int{0}
+}
+
+func (x *ExportPayrollPDFRequest) GetEmployeeId() uint32 {
+	if x != nil {
+		return x.EmployeeId
+	}
+	return 0
+}
+
+func (x *ExportPayrollPDFRequest) GetMonthYear() string {
+	if x != nil {
+		return x.MonthYear
+	}
+	return ""
+}
+
+type ExportPayrollPDFReply struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	PdfData       []byte                 `protobuf:"bytes,1,opt,name=pdf_data,json=pdfData,proto3" json:"pdf_data,omitempty"`
+	Filename      string                 `protobuf:"bytes,2,opt,name=filename,proto3" json:"filename,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ExportPayrollPDFReply) Reset() {
+	*x = ExportPayrollPDFReply{}
+	mi := &file_api_payroll_v1_payroll_proto_msgTypes[1]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ExportPayrollPDFReply) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ExportPayrollPDFReply) ProtoMessage() {}
+
+func (x *ExportPayrollPDFReply) ProtoReflect() protoreflect.Message {
+	mi := &file_api_payroll_v1_payroll_proto_msgTypes[1]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ExportPayrollPDFReply.ProtoReflect.Descriptor instead.
+func (*ExportPayrollPDFReply) Descriptor() ([]byte, []int) {
+	return file_api_payroll_v1_payroll_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *ExportPayrollPDFReply) GetPdfData() []byte {
+	if x != nil {
+		return x.PdfData
+	}
+	return nil
+}
+
+func (x *ExportPayrollPDFReply) GetFilename() string {
+	if x != nil {
+		return x.Filename
+	}
+	return ""
+}
+
 type CalculatePayrollRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	EmployeeId    uint32                 `protobuf:"varint,1,opt,name=employee_id,json=employeeId,proto3" json:"employee_id,omitempty"`
@@ -33,7 +137,7 @@ type CalculatePayrollRequest struct {
 
 func (x *CalculatePayrollRequest) Reset() {
 	*x = CalculatePayrollRequest{}
-	mi := &file_api_payroll_v1_payroll_proto_msgTypes[0]
+	mi := &file_api_payroll_v1_payroll_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -45,7 +149,7 @@ func (x *CalculatePayrollRequest) String() string {
 func (*CalculatePayrollRequest) ProtoMessage() {}
 
 func (x *CalculatePayrollRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_api_payroll_v1_payroll_proto_msgTypes[0]
+	mi := &file_api_payroll_v1_payroll_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -58,7 +162,7 @@ func (x *CalculatePayrollRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CalculatePayrollRequest.ProtoReflect.Descriptor instead.
 func (*CalculatePayrollRequest) Descriptor() ([]byte, []int) {
-	return file_api_payroll_v1_payroll_proto_rawDescGZIP(), []int{0}
+	return file_api_payroll_v1_payroll_proto_rawDescGZIP(), []int{2}
 }
 
 func (x *CalculatePayrollRequest) GetEmployeeId() uint32 {
@@ -96,7 +200,7 @@ type CalculatePayrollReply struct {
 
 func (x *CalculatePayrollReply) Reset() {
 	*x = CalculatePayrollReply{}
-	mi := &file_api_payroll_v1_payroll_proto_msgTypes[1]
+	mi := &file_api_payroll_v1_payroll_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -108,7 +212,7 @@ func (x *CalculatePayrollReply) String() string {
 func (*CalculatePayrollReply) ProtoMessage() {}
 
 func (x *CalculatePayrollReply) ProtoReflect() protoreflect.Message {
-	mi := &file_api_payroll_v1_payroll_proto_msgTypes[1]
+	mi := &file_api_payroll_v1_payroll_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -121,7 +225,7 @@ func (x *CalculatePayrollReply) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CalculatePayrollReply.ProtoReflect.Descriptor instead.
 func (*CalculatePayrollReply) Descriptor() ([]byte, []int) {
-	return file_api_payroll_v1_payroll_proto_rawDescGZIP(), []int{1}
+	return file_api_payroll_v1_payroll_proto_rawDescGZIP(), []int{3}
 }
 
 func (x *CalculatePayrollReply) GetGrossSalary() float64 {
@@ -177,7 +281,7 @@ type GetPayrollsByMonthRequest struct {
 
 func (x *GetPayrollsByMonthRequest) Reset() {
 	*x = GetPayrollsByMonthRequest{}
-	mi := &file_api_payroll_v1_payroll_proto_msgTypes[2]
+	mi := &file_api_payroll_v1_payroll_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -189,7 +293,7 @@ func (x *GetPayrollsByMonthRequest) String() string {
 func (*GetPayrollsByMonthRequest) ProtoMessage() {}
 
 func (x *GetPayrollsByMonthRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_api_payroll_v1_payroll_proto_msgTypes[2]
+	mi := &file_api_payroll_v1_payroll_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -202,7 +306,7 @@ func (x *GetPayrollsByMonthRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetPayrollsByMonthRequest.ProtoReflect.Descriptor instead.
 func (*GetPayrollsByMonthRequest) Descriptor() ([]byte, []int) {
-	return file_api_payroll_v1_payroll_proto_rawDescGZIP(), []int{2}
+	return file_api_payroll_v1_payroll_proto_rawDescGZIP(), []int{4}
 }
 
 func (x *GetPayrollsByMonthRequest) GetEmployeeId() uint32 {
@@ -240,7 +344,7 @@ type PayrollItem struct {
 
 func (x *PayrollItem) Reset() {
 	*x = PayrollItem{}
-	mi := &file_api_payroll_v1_payroll_proto_msgTypes[3]
+	mi := &file_api_payroll_v1_payroll_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -252,7 +356,7 @@ func (x *PayrollItem) String() string {
 func (*PayrollItem) ProtoMessage() {}
 
 func (x *PayrollItem) ProtoReflect() protoreflect.Message {
-	mi := &file_api_payroll_v1_payroll_proto_msgTypes[3]
+	mi := &file_api_payroll_v1_payroll_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -265,7 +369,7 @@ func (x *PayrollItem) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PayrollItem.ProtoReflect.Descriptor instead.
 func (*PayrollItem) Descriptor() ([]byte, []int) {
-	return file_api_payroll_v1_payroll_proto_rawDescGZIP(), []int{3}
+	return file_api_payroll_v1_payroll_proto_rawDescGZIP(), []int{5}
 }
 
 func (x *PayrollItem) GetGrossSalary() float64 {
@@ -319,7 +423,7 @@ type GetPayrollsByMonthReply struct {
 
 func (x *GetPayrollsByMonthReply) Reset() {
 	*x = GetPayrollsByMonthReply{}
-	mi := &file_api_payroll_v1_payroll_proto_msgTypes[4]
+	mi := &file_api_payroll_v1_payroll_proto_msgTypes[6]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -331,7 +435,7 @@ func (x *GetPayrollsByMonthReply) String() string {
 func (*GetPayrollsByMonthReply) ProtoMessage() {}
 
 func (x *GetPayrollsByMonthReply) ProtoReflect() protoreflect.Message {
-	mi := &file_api_payroll_v1_payroll_proto_msgTypes[4]
+	mi := &file_api_payroll_v1_payroll_proto_msgTypes[6]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -344,7 +448,7 @@ func (x *GetPayrollsByMonthReply) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetPayrollsByMonthReply.ProtoReflect.Descriptor instead.
 func (*GetPayrollsByMonthReply) Descriptor() ([]byte, []int) {
-	return file_api_payroll_v1_payroll_proto_rawDescGZIP(), []int{4}
+	return file_api_payroll_v1_payroll_proto_rawDescGZIP(), []int{6}
 }
 
 func (x *GetPayrollsByMonthReply) GetItems() []*PayrollItem {
@@ -359,7 +463,15 @@ var File_api_payroll_v1_payroll_proto protoreflect.FileDescriptor
 const file_api_payroll_v1_payroll_proto_rawDesc = "" +
 	"\n" +
 	"\x1capi/payroll/v1/payroll.proto\x12\n" +
-	"payroll.v1\x1a\x1cgoogle/api/annotations.proto\"y\n" +
+	"payroll.v1\x1a\x1cgoogle/api/annotations.proto\"Y\n" +
+	"\x17ExportPayrollPDFRequest\x12\x1f\n" +
+	"\vemployee_id\x18\x01 \x01(\rR\n" +
+	"employeeId\x12\x1d\n" +
+	"\n" +
+	"month_year\x18\x02 \x01(\tR\tmonthYear\"N\n" +
+	"\x15ExportPayrollPDFReply\x12\x19\n" +
+	"\bpdf_data\x18\x01 \x01(\fR\apdfData\x12\x1a\n" +
+	"\bfilename\x18\x02 \x01(\tR\bfilename\"y\n" +
 	"\x17CalculatePayrollRequest\x12\x1f\n" +
 	"\vemployee_id\x18\x01 \x01(\rR\n" +
 	"employeeId\x12\x1e\n" +
@@ -399,9 +511,10 @@ const file_api_payroll_v1_payroll_proto_rawDesc = "" +
 	"\n" +
 	"leave_days\x18\x06 \x01(\x05R\tleaveDays\"H\n" +
 	"\x17GetPayrollsByMonthReply\x12-\n" +
-	"\x05items\x18\x01 \x03(\v2\x17.payroll.v1.PayrollItemR\x05items2\x87\x01\n" +
+	"\x05items\x18\x01 \x03(\v2\x17.payroll.v1.PayrollItemR\x05items2\xa3\x02\n" +
 	"\aPayroll\x12|\n" +
-	"\x10CalculatePayroll\x12#.payroll.v1.CalculatePayrollRequest\x1a!.payroll.v1.CalculatePayrollReply\" \x82\xd3\xe4\x93\x02\x1a:\x01*\"\x15/v1/payroll/calculateB\x19Z\x17myapp/api/payroll/v1;v1b\x06proto3"
+	"\x10CalculatePayroll\x12#.payroll.v1.CalculatePayrollRequest\x1a!.payroll.v1.CalculatePayrollReply\" \x82\xd3\xe4\x93\x02\x1a:\x01*\"\x15/v1/payroll/calculate\x12\x99\x01\n" +
+	"\x10ExportPayrollPDF\x12#.payroll.v1.ExportPayrollPDFRequest\x1a!.payroll.v1.ExportPayrollPDFReply\"=\x82\xd3\xe4\x93\x027b\x01*\x122/v1/payroll/{employee_id}/payslip/{month_year}.pdfB\x19Z\x17myapp/api/payroll/v1;v1b\x06proto3"
 
 var (
 	file_api_payroll_v1_payroll_proto_rawDescOnce sync.Once
@@ -415,20 +528,24 @@ func file_api_payroll_v1_payroll_proto_rawDescGZIP() []byte {
 	return file_api_payroll_v1_payroll_proto_rawDescData
 }
 
-var file_api_payroll_v1_payroll_proto_msgTypes = make([]protoimpl.MessageInfo, 5)
+var file_api_payroll_v1_payroll_proto_msgTypes = make([]protoimpl.MessageInfo, 7)
 var file_api_payroll_v1_payroll_proto_goTypes = []any{
-	(*CalculatePayrollRequest)(nil),   // 0: payroll.v1.CalculatePayrollRequest
-	(*CalculatePayrollReply)(nil),     // 1: payroll.v1.CalculatePayrollReply
-	(*GetPayrollsByMonthRequest)(nil), // 2: payroll.v1.GetPayrollsByMonthRequest
-	(*PayrollItem)(nil),               // 3: payroll.v1.PayrollItem
-	(*GetPayrollsByMonthReply)(nil),   // 4: payroll.v1.GetPayrollsByMonthReply
+	(*ExportPayrollPDFRequest)(nil),   // 0: payroll.v1.ExportPayrollPDFRequest
+	(*ExportPayrollPDFReply)(nil),     // 1: payroll.v1.ExportPayrollPDFReply
+	(*CalculatePayrollRequest)(nil),   // 2: payroll.v1.CalculatePayrollRequest
+	(*CalculatePayrollReply)(nil),     // 3: payroll.v1.CalculatePayrollReply
+	(*GetPayrollsByMonthRequest)(nil), // 4: payroll.v1.GetPayrollsByMonthRequest
+	(*PayrollItem)(nil),               // 5: payroll.v1.PayrollItem
+	(*GetPayrollsByMonthReply)(nil),   // 6: payroll.v1.GetPayrollsByMonthReply
 }
 var file_api_payroll_v1_payroll_proto_depIdxs = []int32{
-	3, // 0: payroll.v1.GetPayrollsByMonthReply.items:type_name -> payroll.v1.PayrollItem
-	0, // 1: payroll.v1.Payroll.CalculatePayroll:input_type -> payroll.v1.CalculatePayrollRequest
-	1, // 2: payroll.v1.Payroll.CalculatePayroll:output_type -> payroll.v1.CalculatePayrollReply
-	2, // [2:3] is the sub-list for method output_type
-	1, // [1:2] is the sub-list for method input_type
+	5, // 0: payroll.v1.GetPayrollsByMonthReply.items:type_name -> payroll.v1.PayrollItem
+	2, // 1: payroll.v1.Payroll.CalculatePayroll:input_type -> payroll.v1.CalculatePayrollRequest
+	0, // 2: payroll.v1.Payroll.ExportPayrollPDF:input_type -> payroll.v1.ExportPayrollPDFRequest
+	3, // 3: payroll.v1.Payroll.CalculatePayroll:output_type -> payroll.v1.CalculatePayrollReply
+	1, // 4: payroll.v1.Payroll.ExportPayrollPDF:output_type -> payroll.v1.ExportPayrollPDFReply
+	3, // [3:5] is the sub-list for method output_type
+	1, // [1:3] is the sub-list for method input_type
 	1, // [1:1] is the sub-list for extension type_name
 	1, // [1:1] is the sub-list for extension extendee
 	0, // [0:1] is the sub-list for field type_name
@@ -445,7 +562,7 @@ func file_api_payroll_v1_payroll_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_api_payroll_v1_payroll_proto_rawDesc), len(file_api_payroll_v1_payroll_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   5,
+			NumMessages:   7,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

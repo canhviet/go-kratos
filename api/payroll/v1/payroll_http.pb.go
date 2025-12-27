@@ -20,14 +20,17 @@ var _ = binding.EncodeURL
 const _ = http.SupportPackageIsVersion1
 
 const OperationPayrollCalculatePayroll = "/payroll.v1.Payroll/CalculatePayroll"
+const OperationPayrollExportPayrollPDF = "/payroll.v1.Payroll/ExportPayrollPDF"
 
 type PayrollHTTPServer interface {
 	CalculatePayroll(context.Context, *CalculatePayrollRequest) (*CalculatePayrollReply, error)
+	ExportPayrollPDF(context.Context, *ExportPayrollPDFRequest) (*ExportPayrollPDFReply, error)
 }
 
 func RegisterPayrollHTTPServer(s *http.Server, srv PayrollHTTPServer) {
 	r := s.Route("/")
 	r.POST("/v1/payroll/calculate", _Payroll_CalculatePayroll0_HTTP_Handler(srv))
+	r.GET("/v1/payroll/{employee_id}/payslip/{month_year}.pdf", _Payroll_ExportPayrollPDF0_HTTP_Handler(srv))
 }
 
 func _Payroll_CalculatePayroll0_HTTP_Handler(srv PayrollHTTPServer) func(ctx http.Context) error {
@@ -52,8 +55,31 @@ func _Payroll_CalculatePayroll0_HTTP_Handler(srv PayrollHTTPServer) func(ctx htt
 	}
 }
 
+func _Payroll_ExportPayrollPDF0_HTTP_Handler(srv PayrollHTTPServer) func(ctx http.Context) error {
+	return func(ctx http.Context) error {
+		var in ExportPayrollPDFRequest
+		if err := ctx.BindQuery(&in); err != nil {
+			return err
+		}
+		if err := ctx.BindVars(&in); err != nil {
+			return err
+		}
+		http.SetOperation(ctx, OperationPayrollExportPayrollPDF)
+		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
+			return srv.ExportPayrollPDF(ctx, req.(*ExportPayrollPDFRequest))
+		})
+		out, err := h(ctx, &in)
+		if err != nil {
+			return err
+		}
+		reply := out.(*ExportPayrollPDFReply)
+		return ctx.Result(200, reply)
+	}
+}
+
 type PayrollHTTPClient interface {
 	CalculatePayroll(ctx context.Context, req *CalculatePayrollRequest, opts ...http.CallOption) (rsp *CalculatePayrollReply, err error)
+	ExportPayrollPDF(ctx context.Context, req *ExportPayrollPDFRequest, opts ...http.CallOption) (rsp *ExportPayrollPDFReply, err error)
 }
 
 type PayrollHTTPClientImpl struct {
@@ -71,6 +97,19 @@ func (c *PayrollHTTPClientImpl) CalculatePayroll(ctx context.Context, in *Calcul
 	opts = append(opts, http.Operation(OperationPayrollCalculatePayroll))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "POST", path, in, &out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return &out, nil
+}
+
+func (c *PayrollHTTPClientImpl) ExportPayrollPDF(ctx context.Context, in *ExportPayrollPDFRequest, opts ...http.CallOption) (*ExportPayrollPDFReply, error) {
+	var out ExportPayrollPDFReply
+	pattern := "/v1/payroll/{employee_id}/payslip/{month_year}.pdf"
+	path := binding.EncodeURL(pattern, in, true)
+	opts = append(opts, http.Operation(OperationPayrollExportPayrollPDF))
+	opts = append(opts, http.PathTemplate(pattern))
+	err := c.cc.Invoke(ctx, "GET", path, nil, &out, opts...)
 	if err != nil {
 		return nil, err
 	}

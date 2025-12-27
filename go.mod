@@ -31,6 +31,7 @@ require (
 	github.com/gorilla/mux v1.8.1 // indirect
 	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/jinzhu/now v1.1.5 // indirect
+	github.com/jung-kurt/gofpdf v1.16.2
 	github.com/kr/text v0.2.0 // indirect
 	github.com/redis/go-redis/v9 v9.17.2
 	go.opentelemetry.io/auto/sdk v1.2.1 // indirect
