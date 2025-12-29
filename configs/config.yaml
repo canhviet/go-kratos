@@ -9,6 +9,14 @@ data:
     password: "" 
     db: 0
 
+  email:
+    host: "smtp.gmail.com"
+    port: 587
+    username: "canhviet.dev@gmail.com"
+    password: "byfs lcna pzem tnpa"  
+    from_name: "My Company HR"
+    from_email: "canhviet.dev@gmail.com"
+
 auth:
   jwt_secret: ${JWT_SECRET:R0G444tYluKFUjDloU1H9hHZkHP9E5JBHla0kC89CmA=}
   token_exp: 1440

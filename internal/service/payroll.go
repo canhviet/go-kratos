@@ -50,3 +50,14 @@ func (s *PayrollService) ExportPayrollPDF(ctx context.Context, req *v1.ExportPay
 
 	return &v1.ExportPayrollPDFReply{}, nil
 }
+
+func (s *PayrollService) SendPayslipEmail(ctx context.Context, req *v1.SendPayslipEmailRequest) (*v1.SendPayslipEmailReply, error) {
+	err := s.uc.SendPayslipEmail(ctx, req.EmployeeId, req.MonthYear, req.ToEmail)
+	if err != nil {
+		return nil, status.Errorf(codes.Internal, "send email failed: %v", err)
+	}
+
+	return &v1.SendPayslipEmailReply{
+		Message: "Payslip sent successfully via email",
+	}, nil
+}

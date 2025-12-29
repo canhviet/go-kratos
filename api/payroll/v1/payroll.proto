@@ -50,6 +50,16 @@ message GetPayrollsByMonthReply {
   repeated PayrollItem items = 1;
 }
 
+message SendPayslipEmailRequest {
+  uint32 employee_id = 1;
+  string month_year = 2;  
+  string to_email = 3;    
+}
+
+message SendPayslipEmailReply {
+  string message = 1;
+}
+
 service Payroll {
   rpc CalculatePayroll (CalculatePayrollRequest) returns (CalculatePayrollReply) {
     option (google.api.http) = {
@@ -62,6 +72,13 @@ service Payroll {
     option (google.api.http) = {
       get: "/v1/payroll/{employee_id}/payslip/{month_year}.pdf";
       response_body: "*";
+    };
+  }
+
+  rpc SendPayslipEmail (SendPayslipEmailRequest) returns (SendPayslipEmailReply) {
+    option (google.api.http) = {
+      post: "/v1/payroll/send-email";
+      body: "*";
     };
   }
 }

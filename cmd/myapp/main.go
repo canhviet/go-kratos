@@ -76,10 +76,18 @@ func main() {
 	payrollRepo := repository.NewPayrollRepo(d)
 	timesheetRepo := repository.NewTimesheetRepo(d)
 	userRepo := repository.NewUserRepo(d)
+	emailRepo := repository.NewEmailRepo(
+		bc.Data.Email.Host,
+		int(bc.Data.Email.Port),
+		bc.Data.Email.Username,
+		bc.Data.Email.Password,
+		bc.Data.Email.FromEmail,
+		bc.Data.Email.FromName,
+	)
 
 	// Usecases (Biz layer)
 	employeeUsecase := biz.NewEmployeeUsecase(employeeRepo)
-	payrollUsecase := biz.NewPayrollUsecase(payrollRepo, employeeRepo, timesheetRepo)
+	payrollUsecase := biz.NewPayrollUsecase(payrollRepo, employeeRepo, timesheetRepo, emailRepo)
 	timesheetUsecase := biz.NewTimesheetUsecase(timesheetRepo)
 	authUsecase := biz.NewAuthUsecase(
 		userRepo,

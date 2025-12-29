@@ -27,17 +27,20 @@ type PayrollUsecase struct {
 	payrollRepo   repository.PayrollRepo
 	employeeRepo  repository.EmployeeRepo 
 	timesheetRepo repository.TimesheetRepo
+	emailRepo repository.EmailRepo
 }
 
 func NewPayrollUsecase(
 	payrollRepo repository.PayrollRepo,
 	employeeRepo repository.EmployeeRepo,
 	timesheetRepo repository.TimesheetRepo,
+	emailRepo repository.EmailRepo,
 ) *PayrollUsecase {
 	return &PayrollUsecase{
 		payrollRepo:   payrollRepo,
 		employeeRepo:  employeeRepo,
 		timesheetRepo: timesheetRepo,
+		emailRepo: emailRepo,
 	}
 }
 
@@ -234,4 +237,18 @@ func formatCurrency(amount float64) string {
 	}
 
 	return result.String() + " VND"
+}
+
+func (uc *PayrollUsecase) SendPayslipEmail(ctx context.Context, employeeID uint32, monthYearStr, toEmail string) error {
+	pdfData, err := uc.ExportPayrollPDF(ctx, employeeID, monthYearStr)
+	if err != nil {
+		return fmt.Errorf("generate PDF: %w", err)
+	}
+
+	emp, err := uc.employeeRepo.GetEmployeeByID(ctx, uint(employeeID))
+	if err != nil {
+		return fmt.Errorf("get employee: %w", err)
+	}
+
+	return uc.emailRepo.SendPayslip(ctx, toEmail, emp.Name, monthYearStr, pdfData)
 }

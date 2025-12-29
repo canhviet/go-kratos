@@ -21,16 +21,19 @@ const _ = http.SupportPackageIsVersion1
 
 const OperationPayrollCalculatePayroll = "/payroll.v1.Payroll/CalculatePayroll"
 const OperationPayrollExportPayrollPDF = "/payroll.v1.Payroll/ExportPayrollPDF"
+const OperationPayrollSendPayslipEmail = "/payroll.v1.Payroll/SendPayslipEmail"
 
 type PayrollHTTPServer interface {
 	CalculatePayroll(context.Context, *CalculatePayrollRequest) (*CalculatePayrollReply, error)
 	ExportPayrollPDF(context.Context, *ExportPayrollPDFRequest) (*ExportPayrollPDFReply, error)
+	SendPayslipEmail(context.Context, *SendPayslipEmailRequest) (*SendPayslipEmailReply, error)
 }
 
 func RegisterPayrollHTTPServer(s *http.Server, srv PayrollHTTPServer) {
 	r := s.Route("/")
 	r.POST("/v1/payroll/calculate", _Payroll_CalculatePayroll0_HTTP_Handler(srv))
 	r.GET("/v1/payroll/{employee_id}/payslip/{month_year}.pdf", _Payroll_ExportPayrollPDF0_HTTP_Handler(srv))
+	r.POST("/v1/payroll/send-email", _Payroll_SendPayslipEmail0_HTTP_Handler(srv))
 }
 
 func _Payroll_CalculatePayroll0_HTTP_Handler(srv PayrollHTTPServer) func(ctx http.Context) error {
@@ -77,9 +80,32 @@ func _Payroll_ExportPayrollPDF0_HTTP_Handler(srv PayrollHTTPServer) func(ctx htt
 	}
 }
 
+func _Payroll_SendPayslipEmail0_HTTP_Handler(srv PayrollHTTPServer) func(ctx http.Context) error {
+	return func(ctx http.Context) error {
+		var in SendPayslipEmailRequest
+		if err := ctx.Bind(&in); err != nil {
+			return err
+		}
+		if err := ctx.BindQuery(&in); err != nil {
+			return err
+		}
+		http.SetOperation(ctx, OperationPayrollSendPayslipEmail)
+		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
+			return srv.SendPayslipEmail(ctx, req.(*SendPayslipEmailRequest))
+		})
+		out, err := h(ctx, &in)
+		if err != nil {
+			return err
+		}
+		reply := out.(*SendPayslipEmailReply)
+		return ctx.Result(200, reply)
+	}
+}
+
 type PayrollHTTPClient interface {
 	CalculatePayroll(ctx context.Context, req *CalculatePayrollRequest, opts ...http.CallOption) (rsp *CalculatePayrollReply, err error)
 	ExportPayrollPDF(ctx context.Context, req *ExportPayrollPDFRequest, opts ...http.CallOption) (rsp *ExportPayrollPDFReply, err error)
+	SendPayslipEmail(ctx context.Context, req *SendPayslipEmailRequest, opts ...http.CallOption) (rsp *SendPayslipEmailReply, err error)
 }
 
 type PayrollHTTPClientImpl struct {
@@ -110,6 +136,19 @@ func (c *PayrollHTTPClientImpl) ExportPayrollPDF(ctx context.Context, in *Export
 	opts = append(opts, http.Operation(OperationPayrollExportPayrollPDF))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "GET", path, nil, &out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return &out, nil
+}
+
+func (c *PayrollHTTPClientImpl) SendPayslipEmail(ctx context.Context, in *SendPayslipEmailRequest, opts ...http.CallOption) (*SendPayslipEmailReply, error) {
+	var out SendPayslipEmailReply
+	pattern := "/v1/payroll/send-email"
+	path := binding.EncodeURL(pattern, in, false)
+	opts = append(opts, http.Operation(OperationPayrollSendPayslipEmail))
+	opts = append(opts, http.PathTemplate(pattern))
+	err := c.cc.Invoke(ctx, "POST", path, in, &out, opts...)
 	if err != nil {
 		return nil, err
 	}

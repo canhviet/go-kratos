@@ -458,6 +458,110 @@ func (x *GetPayrollsByMonthReply) GetItems() []*PayrollItem {
 	return nil
 }
 
+type SendPayslipEmailRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	EmployeeId    uint32                 `protobuf:"varint,1,opt,name=employee_id,json=employeeId,proto3" json:"employee_id,omitempty"`
+	MonthYear     string                 `protobuf:"bytes,2,opt,name=month_year,json=monthYear,proto3" json:"month_year,omitempty"`
+	ToEmail       string                 `protobuf:"bytes,3,opt,name=to_email,json=toEmail,proto3" json:"to_email,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SendPayslipEmailRequest) Reset() {
+	*x = SendPayslipEmailRequest{}
+	mi := &file_api_payroll_v1_payroll_proto_msgTypes[7]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SendPayslipEmailRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SendPayslipEmailRequest) ProtoMessage() {}
+
+func (x *SendPayslipEmailRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_api_payroll_v1_payroll_proto_msgTypes[7]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SendPayslipEmailRequest.ProtoReflect.Descriptor instead.
+func (*SendPayslipEmailRequest) Descriptor() ([]byte, []int) {
+	return file_api_payroll_v1_payroll_proto_rawDescGZIP(), []int{7}
+}
+
+func (x *SendPayslipEmailRequest) GetEmployeeId() uint32 {
+	if x != nil {
+		return x.EmployeeId
+	}
+	return 0
+}
+
+func (x *SendPayslipEmailRequest) GetMonthYear() string {
+	if x != nil {
+		return x.MonthYear
+	}
+	return ""
+}
+
+func (x *SendPayslipEmailRequest) GetToEmail() string {
+	if x != nil {
+		return x.ToEmail
+	}
+	return ""
+}
+
+type SendPayslipEmailReply struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Message       string                 `protobuf:"bytes,1,opt,name=message,proto3" json:"message,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SendPayslipEmailReply) Reset() {
+	*x = SendPayslipEmailReply{}
+	mi := &file_api_payroll_v1_payroll_proto_msgTypes[8]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SendPayslipEmailReply) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SendPayslipEmailReply) ProtoMessage() {}
+
+func (x *SendPayslipEmailReply) ProtoReflect() protoreflect.Message {
+	mi := &file_api_payroll_v1_payroll_proto_msgTypes[8]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SendPayslipEmailReply.ProtoReflect.Descriptor instead.
+func (*SendPayslipEmailReply) Descriptor() ([]byte, []int) {
+	return file_api_payroll_v1_payroll_proto_rawDescGZIP(), []int{8}
+}
+
+func (x *SendPayslipEmailReply) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
 var File_api_payroll_v1_payroll_proto protoreflect.FileDescriptor
 
 const file_api_payroll_v1_payroll_proto_rawDesc = "" +
@@ -511,10 +615,19 @@ const file_api_payroll_v1_payroll_proto_rawDesc = "" +
 	"\n" +
 	"leave_days\x18\x06 \x01(\x05R\tleaveDays\"H\n" +
 	"\x17GetPayrollsByMonthReply\x12-\n" +
-	"\x05items\x18\x01 \x03(\v2\x17.payroll.v1.PayrollItemR\x05items2\xa3\x02\n" +
+	"\x05items\x18\x01 \x03(\v2\x17.payroll.v1.PayrollItemR\x05items\"t\n" +
+	"\x17SendPayslipEmailRequest\x12\x1f\n" +
+	"\vemployee_id\x18\x01 \x01(\rR\n" +
+	"employeeId\x12\x1d\n" +
+	"\n" +
+	"month_year\x18\x02 \x01(\tR\tmonthYear\x12\x19\n" +
+	"\bto_email\x18\x03 \x01(\tR\atoEmail\"1\n" +
+	"\x15SendPayslipEmailReply\x12\x18\n" +
+	"\amessage\x18\x01 \x01(\tR\amessage2\xa2\x03\n" +
 	"\aPayroll\x12|\n" +
 	"\x10CalculatePayroll\x12#.payroll.v1.CalculatePayrollRequest\x1a!.payroll.v1.CalculatePayrollReply\" \x82\xd3\xe4\x93\x02\x1a:\x01*\"\x15/v1/payroll/calculate\x12\x99\x01\n" +
-	"\x10ExportPayrollPDF\x12#.payroll.v1.ExportPayrollPDFRequest\x1a!.payroll.v1.ExportPayrollPDFReply\"=\x82\xd3\xe4\x93\x027b\x01*\x122/v1/payroll/{employee_id}/payslip/{month_year}.pdfB\x19Z\x17myapp/api/payroll/v1;v1b\x06proto3"
+	"\x10ExportPayrollPDF\x12#.payroll.v1.ExportPayrollPDFRequest\x1a!.payroll.v1.ExportPayrollPDFReply\"=\x82\xd3\xe4\x93\x027b\x01*\x122/v1/payroll/{employee_id}/payslip/{month_year}.pdf\x12}\n" +
+	"\x10SendPayslipEmail\x12#.payroll.v1.SendPayslipEmailRequest\x1a!.payroll.v1.SendPayslipEmailReply\"!\x82\xd3\xe4\x93\x02\x1b:\x01*\"\x16/v1/payroll/send-emailB\x19Z\x17myapp/api/payroll/v1;v1b\x06proto3"
 
 var (
 	file_api_payroll_v1_payroll_proto_rawDescOnce sync.Once
@@ -528,7 +641,7 @@ func file_api_payroll_v1_payroll_proto_rawDescGZIP() []byte {
 	return file_api_payroll_v1_payroll_proto_rawDescData
 }
 
-var file_api_payroll_v1_payroll_proto_msgTypes = make([]protoimpl.MessageInfo, 7)
+var file_api_payroll_v1_payroll_proto_msgTypes = make([]protoimpl.MessageInfo, 9)
 var file_api_payroll_v1_payroll_proto_goTypes = []any{
 	(*ExportPayrollPDFRequest)(nil),   // 0: payroll.v1.ExportPayrollPDFRequest
 	(*ExportPayrollPDFReply)(nil),     // 1: payroll.v1.ExportPayrollPDFReply
@@ -537,15 +650,19 @@ var file_api_payroll_v1_payroll_proto_goTypes = []any{
 	(*GetPayrollsByMonthRequest)(nil), // 4: payroll.v1.GetPayrollsByMonthRequest
 	(*PayrollItem)(nil),               // 5: payroll.v1.PayrollItem
 	(*GetPayrollsByMonthReply)(nil),   // 6: payroll.v1.GetPayrollsByMonthReply
+	(*SendPayslipEmailRequest)(nil),   // 7: payroll.v1.SendPayslipEmailRequest
+	(*SendPayslipEmailReply)(nil),     // 8: payroll.v1.SendPayslipEmailReply
 }
 var file_api_payroll_v1_payroll_proto_depIdxs = []int32{
 	5, // 0: payroll.v1.GetPayrollsByMonthReply.items:type_name -> payroll.v1.PayrollItem
 	2, // 1: payroll.v1.Payroll.CalculatePayroll:input_type -> payroll.v1.CalculatePayrollRequest
 	0, // 2: payroll.v1.Payroll.ExportPayrollPDF:input_type -> payroll.v1.ExportPayrollPDFRequest
-	3, // 3: payroll.v1.Payroll.CalculatePayroll:output_type -> payroll.v1.CalculatePayrollReply
-	1, // 4: payroll.v1.Payroll.ExportPayrollPDF:output_type -> payroll.v1.ExportPayrollPDFReply
-	3, // [3:5] is the sub-list for method output_type
-	1, // [1:3] is the sub-list for method input_type
+	7, // 3: payroll.v1.Payroll.SendPayslipEmail:input_type -> payroll.v1.SendPayslipEmailRequest
+	3, // 4: payroll.v1.Payroll.CalculatePayroll:output_type -> payroll.v1.CalculatePayrollReply
+	1, // 5: payroll.v1.Payroll.ExportPayrollPDF:output_type -> payroll.v1.ExportPayrollPDFReply
+	8, // 6: payroll.v1.Payroll.SendPayslipEmail:output_type -> payroll.v1.SendPayslipEmailReply
+	4, // [4:7] is the sub-list for method output_type
+	1, // [1:4] is the sub-list for method input_type
 	1, // [1:1] is the sub-list for extension type_name
 	1, // [1:1] is the sub-list for extension extendee
 	0, // [0:1] is the sub-list for field type_name
@@ -562,7 +679,7 @@ func file_api_payroll_v1_payroll_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_api_payroll_v1_payroll_proto_rawDesc), len(file_api_payroll_v1_payroll_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   7,
+			NumMessages:   9,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

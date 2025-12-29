@@ -37,4 +37,14 @@ message Data {
     int32 db = 3;
   }
   Redis redis = 2;
+
+  message Email {
+    string host = 1;
+    int32 port = 2;
+    string username = 3;
+    string password = 4;
+    string from_name = 5;
+    string from_email = 6;
+  }
+  Email email = 3;
 }

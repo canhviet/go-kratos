@@ -21,6 +21,7 @@ const _ = grpc.SupportPackageIsVersion9
 const (
 	Payroll_CalculatePayroll_FullMethodName = "/payroll.v1.Payroll/CalculatePayroll"
 	Payroll_ExportPayrollPDF_FullMethodName = "/payroll.v1.Payroll/ExportPayrollPDF"
+	Payroll_SendPayslipEmail_FullMethodName = "/payroll.v1.Payroll/SendPayslipEmail"
 )
 
 // PayrollClient is the client API for Payroll service.
@@ -29,6 +30,7 @@ const (
 type PayrollClient interface {
 	CalculatePayroll(ctx context.Context, in *CalculatePayrollRequest, opts ...grpc.CallOption) (*CalculatePayrollReply, error)
 	ExportPayrollPDF(ctx context.Context, in *ExportPayrollPDFRequest, opts ...grpc.CallOption) (*ExportPayrollPDFReply, error)
+	SendPayslipEmail(ctx context.Context, in *SendPayslipEmailRequest, opts ...grpc.CallOption) (*SendPayslipEmailReply, error)
 }
 
 type payrollClient struct {
@@ -59,12 +61,23 @@ func (c *payrollClient) ExportPayrollPDF(ctx context.Context, in *ExportPayrollP
 	return out, nil
 }
 
+func (c *payrollClient) SendPayslipEmail(ctx context.Context, in *SendPayslipEmailRequest, opts ...grpc.CallOption) (*SendPayslipEmailReply, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(SendPayslipEmailReply)
+	err := c.cc.Invoke(ctx, Payroll_SendPayslipEmail_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // PayrollServer is the server API for Payroll service.
 // All implementations must embed UnimplementedPayrollServer
 // for forward compatibility.
 type PayrollServer interface {
 	CalculatePayroll(context.Context, *CalculatePayrollRequest) (*CalculatePayrollReply, error)
 	ExportPayrollPDF(context.Context, *ExportPayrollPDFRequest) (*ExportPayrollPDFReply, error)
+	SendPayslipEmail(context.Context, *SendPayslipEmailRequest) (*SendPayslipEmailReply, error)
 	mustEmbedUnimplementedPayrollServer()
 }
 
@@ -80,6 +93,9 @@ func (UnimplementedPayrollServer) CalculatePayroll(context.Context, *CalculatePa
 }
 func (UnimplementedPayrollServer) ExportPayrollPDF(context.Context, *ExportPayrollPDFRequest) (*ExportPayrollPDFReply, error) {
 	return nil, status.Error(codes.Unimplemented, "method ExportPayrollPDF not implemented")
+}
+func (UnimplementedPayrollServer) SendPayslipEmail(context.Context, *SendPayslipEmailRequest) (*SendPayslipEmailReply, error) {
+	return nil, status.Error(codes.Unimplemented, "method SendPayslipEmail not implemented")
 }
 func (UnimplementedPayrollServer) mustEmbedUnimplementedPayrollServer() {}
 func (UnimplementedPayrollServer) testEmbeddedByValue()                 {}
@@ -138,6 +154,24 @@ func _Payroll_ExportPayrollPDF_Handler(srv interface{}, ctx context.Context, dec
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Payroll_SendPayslipEmail_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SendPayslipEmailRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PayrollServer).SendPayslipEmail(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Payroll_SendPayslipEmail_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PayrollServer).SendPayslipEmail(ctx, req.(*SendPayslipEmailRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Payroll_ServiceDesc is the grpc.ServiceDesc for Payroll service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -152,6 +186,10 @@ var Payroll_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ExportPayrollPDF",
 			Handler:    _Payroll_ExportPayrollPDF_Handler,
+		},
+		{
+			MethodName: "SendPayslipEmail",
+			Handler:    _Payroll_SendPayslipEmail_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
